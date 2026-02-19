@@ -2,6 +2,7 @@ import './styles.scss'
 import 'bootstrap';
 import { loadActiveOrgs } from "./api"
 import type { ESNOrg } from "./api"
+import { icons } from './icons';
 
 
 let organisations: ESNOrg[] = []
@@ -12,97 +13,97 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <h1>ESN Email Signature Generator</h1>
     <div class="row">
         <div class="col-md-6">
-    <form id="signatureForm" class="mb-4">
+            <form id="signatureForm" class="mb-4">
 
-        <h3>Personal information</h3>
+                <h3>Personal information</h3>
 
-        <div class="mb-3">
-            <label for="name" class="form-label">Full Name</label>
-            <input type="text" id="name" class="form-control" placeholder="Desiderius Erasmus Roterodamus" />
-        </div>
-        <div class="mb-3">
-            <label for="title" class="form-label">Position</label>
-            <input type="text" id="title" class="form-control" placeholder="Philologist" />
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" class="form-control" placeholder="example@esnhavana.org" />
-        </div>
-        <div class="mb-3">
-            <label for="phone" class="form-label">Phone (optional)</label>
-            <input type="tel" id="phone" class="form-control" />
-        </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Desiderius Erasmus Roterodamus" />
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Position</label>
+                    <input type="text" id="title" class="form-control" placeholder="Philologist" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="example@esnhavana.org" />
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone (optional)</label>
+                    <input type="tel" id="phone" class="form-control" />
+                </div>
 
-        <div class="mb-3">
-            <label for="linkedIn" class="form-label">LinkedIn (optional)</label>
-            <input type="tel" id="linkedIn" class="form-control" />
-        </div>
+                <div class="mb-3">
+                    <label for="linkedIn" class="form-label">LinkedIn (optional)</label>
+                    <input type="tel" id="linkedIn" class="form-control" />
+                </div>
 
-        <h3>Section information</h3>
+                <h3>Section information</h3>
 
-        <div class="mb-4 position-relative">
-            <label class="form-label fw-bold">Search Organisation</label>
-            <input type="text" id="org-search" class="form-control form-control-lg"
-                placeholder="Start typing the name of your section/NO...">
-            <div id="org-results" class="list-group position-absolute w-100 shadow"></div>
-        </div>
+                <div class="mb-4 position-relative">
+                    <label class="form-label fw-bold">Search Organisation</label>
+                    <input type="text" id="org-search" class="form-control form-control-lg"
+                        placeholder="Start typing the name of your section/NO...">
+                    <div id="org-results" class="list-group position-absolute w-100 shadow"></div>
+                </div>
 
-        <div id="org-details" class="d-none">
-            <div class="mb-3">
-                <label for="section" class="form-label">ESN section/country/body</label>
-                <input type="text" id="section" class="form-control" placeholder="ESN Havana" />
-            </div>
+                <div id="org-details" class="d-none">
+                    <div class="mb-3">
+                        <label for="section" class="form-label">ESN section/country/body</label>
+                        <input type="text" id="section" class="form-control" placeholder="ESN Havana" />
+                    </div>
 
-            <div class="mb-3">
-                <label for="address" class="form-label">Section address</label>
-                <textarea name="address" id="address" class="form-control" rows="4"
-                    placeholder="Road1\nÅrhus\nSweden"></textarea>
-            </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Section address</label>
+                        <textarea name="address" id="address" class="form-control" rows="4"
+                            placeholder="Road1\nÅrhus\nSweden"></textarea>
+                    </div>
 
-            <div class="mb-3">
-                <label for="website" class="form-label">Website</label>
-                <input type="text" id="website" class="form-control" placeholder="www.esnhavana.org" />
-            </div>
+                    <div class="mb-3">
+                        <label for="website" class="form-label">Website</label>
+                        <input type="text" id="website" class="form-control" placeholder="www.esnhavana.org" />
+                    </div>
 
-            <div class="mb-3">
-                <label for="logo" class="form-label">Logo url</label>
-                <input type="text" id="logo" class="form-control" />
-            </div>
+                    <div class="mb-3">
+                        <label for="logo" class="form-label">Logo url</label>
+                        <input type="text" id="logo" class="form-control" />
+                    </div>
 
-            <h4>Social Media (optional)</h4>
+                    <h4>Social Media (optional)</h4>
 
-            <div class="mb-3">
-                <label for="facebook" class="form-label">Facebook</label>
-                <input type="text" id="facebook" class="form-control"
-                    placeholder="https://www.facebook.com/esn_havana/" />
-            </div>
-
-
-            <div class="mb-3">
-                <label for="instagram" class="form-label">Instagram</label>
-                <input type="text" id="instagram" class="form-control"
-                    placeholder="https://www.instagram.com/esn_havana/" />
-            </div>
-
-            <div class="mb-3">
-                <label for="x" class="form-label">X</label>
-                <input type="text" id="x" class="form-control" placeholder="https://x.com/esn_havana" />
-            </div>
-        </div>
+                    <div class="mb-3">
+                        <label for="facebook" class="form-label">Facebook</label>
+                        <input type="text" id="facebook" class="form-control"
+                            placeholder="https://www.facebook.com/esn_havana/" />
+                    </div>
 
 
-    </form>
+                    <div class="mb-3">
+                        <label for="instagram" class="form-label">Instagram</label>
+                        <input type="text" id="instagram" class="form-control"
+                            placeholder="https://www.instagram.com/esn_havana/" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="x" class="form-label">X</label>
+                        <input type="text" id="x" class="form-control" placeholder="https://x.com/esn_havana" />
+                    </div>
+                </div>
+
+
+            </form>
 
         </div>
         <div class="col-md-6">
-    <h3>Preview</h3>
-    <div id="preview" class="border p-3 bg-light mb-3"></div>
-    <button id="toggleHtmlBtn" class="btn">Show HTML</button>
-    <div id="htmlContainer" class="d-none">
-        <textarea id="htmlOutput" class="form-control" rows="6" readonly></textarea>
+            <h3>Preview</h3>
+            <div id="preview" class="border p-3 bg-light mb-3"></div>
+            <button id="toggleHtmlBtn" class="btn">Show HTML</button>
+            <div id="htmlContainer" class="d-none">
+                <textarea id="htmlOutput" class="form-control" rows="6" readonly></textarea>
             </div>
+        </div>
     </div>
-</div>
 `
 
 const inputs = {
@@ -206,19 +207,19 @@ function updateSignature() {
 
     ${instagram ? `<a href="${instagram}" target="_blank" style="display:inline-block; margin:5px;">
         <img width="20" height="20"
-            src="https://lh5.googleusercontent.com/EtRLT1JePeAbiH-w2u8XJ3qPGsjqRz-ZdxIR7G_XP6eE5xIbB2q6TnUshJiGmdbPSA2XT8APRz02B2cX700lV5uAPXiXGXdmsfbFEjNQyzA0YUV-7464Oo-jzx6cTnFZ2BrdNPTC"
+            src=${icons.instagram}
             alt="Instagram" style="vertical-align:middle; border:none;">
     </a>`: ''}
 
     ${facebook ? `<a href="${facebook}" target="_blank" style="display:inline-block;">
         <img width="20" height="20"
-            src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXdzuUNoUrh52giGdSE-7I_ZL3Pq2DUP66FP3a6gX3CXt9wiRkicRMr5EKcQYu4N5fh7iJnyzbJ8PuO3_8SNHpzjPSkKQqz7L_K77VXkdzeFPj_QuiFXn0sYgcqHlRenZkU-VxAe04io1FXP81lu90V78Yo"
+            src=${icons.facebook}
             alt="Facebook" style="vertical-align:middle; border:none;">
     </a>`: ''}
 
     ${x ? `<a href="${x}" target="_blank" style="display:inline-block;">
         <img width="20" height="20"
-            src="https://lh3.googleusercontent.com/yv4FTNO3XNYL-dDZC-wEoRgPpH6nPwnh_9tyerAKPdpHkgo3rsAS0kZjBSD7dN2njoaTqGeHQXyGr85hLJ9ZZp1Ij3NbqTOLdWkCLDzRtpeQQUJHmiNj_qg9LlyUVpT1GbJ0W1bV"
+            src=${icons.x}
             alt="X" style="vertical-align:middle; border:none;">
     </a>`: ''}
 </div>
