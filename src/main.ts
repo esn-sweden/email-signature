@@ -275,6 +275,19 @@ resultsContainer.addEventListener("click", async (e) => {
   resultsContainer.innerHTML = ""
 })
 
+
+// Select first search result when enter is pressed
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault(); // prevent form submission
+
+    const firstItem = resultsContainer.querySelector<HTMLElement>('.list-group-item');
+    if (firstItem) {
+      firstItem.click();
+    }
+  }
+});
+
 // if user types manually, show fields once they focus the first field
 inputs.section.addEventListener('focus', showOrgDetails);
 
