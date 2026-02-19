@@ -10,6 +10,8 @@ let organisations: ESNOrg[] = []
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="container py-5">
     <h1>ESN Email Signature Generator</h1>
+    <div class="row">
+        <div class="col-md-6">
     <form id="signatureForm" class="mb-4">
 
         <h3>Personal information</h3>
@@ -91,11 +93,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     </form>
 
+        </div>
+        <div class="col-md-6">
     <h3>Preview</h3>
     <div id="preview" class="border p-3 bg-light mb-3"></div>
     <button id="toggleHtmlBtn" class="btn">Show HTML</button>
     <div id="htmlContainer" class="d-none">
         <textarea id="htmlOutput" class="form-control" rows="6" readonly></textarea>
+            </div>
     </div>
 </div>
 `
