@@ -55,7 +55,7 @@ function getAddress(section: SectionApi): string {
 
 
 export async function loadActiveSections(): Promise<Section[]> {
-    const response = await fetch("/api/api/v2/sections")
+    const response = await fetch("https://accounts.esn.org/api/v2/sections")
 
     if (!response.ok) {
         throw new Error("Failed to load organisations")
