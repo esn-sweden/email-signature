@@ -133,7 +133,6 @@ const mandatoryFields: (keyof typeof inputs)[] = [
   "email",
   "section",
   "address",
-  "website",
   "logo",
 ];
 
@@ -161,30 +160,27 @@ function showOrgDetails() {
 
 
 function updateSignature() {
-  // Validate mandatory fields
+
+  let errorCount = 0;
   mandatoryFields.forEach(key => {
     const input = inputs[key];
+
     if (!input.value.trim()) {
-      input.classList.add("is-invalid"); // Bootstrap class
+      input.classList.add("is-invalid");
+      errorCount++;
     } else {
-      input.classList.remove("is-invalid")
+      input.classList.remove("is-invalid");
     }
   });
 
-
-  // Mandatory fields
-  const name = inputs.name.value || inputs.name.placeholder
-  const title = inputs.title.value || inputs.title.placeholder
-  const email = inputs.email.value || inputs.email.placeholder
-  const section = inputs.section.value || inputs.section.placeholder
-  const address = inputs.address.value || inputs.address.placeholder
-  const website = inputs.website.value || inputs.website.placeholder
-  const logo = inputs.logo.value || inputs.logo.placeholder
-
-  // Removing protocol and trailing slashes
+  const name = inputs.name.value
+  const title = inputs.title.value
+  const email = inputs.email.value
+  const section = inputs.section.value
+  const address = inputs.address.value.replace(/\n/g, "<br>")
+  const website = inputs.website.value
   const websiteShort = website.replace(/^.*\:\/\//, "").replace(/\/+$/, "")
-
-  // Optional fields
+  const logo = inputs.logo.value
   const phone = inputs.phone.value
   const linkedIn = inputs.linkedIn.value
   const facebook = inputs.facebook.value
@@ -200,8 +196,8 @@ function updateSignature() {
     ${linkedIn ? `LinkedIn: ${linkedIn}<br>` : ''}
     ——<br>
     <b>${section}</b><br>
-    ${address.replace(/\n/g, "<br>")}<br>
-    <a href="${website}" style="color:#1155cc" target="_blank">${websiteShort}</a><br>
+    ${address}<br>
+    ${website ? `<a href="${website}" style="color:#1155cc" target="_blank">${websiteShort}</a><br>` : ''}
 
     <img src="${logo}" alt="ESN logo" style="width:140px; height:auto; margin:10px 0;"><br>
 
@@ -225,8 +221,13 @@ function updateSignature() {
 </div>
 `.trim()
 
-  preview.innerHTML = signatureHTML
-  htmlOutput.value = signatureHTML
+  if (errorCount == 0) {
+    preview.innerHTML = signatureHTML
+    htmlOutput.value = signatureHTML
+  } else {
+    preview.innerHTML = "Fill in the required fields to see the signature"
+    htmlOutput.value = ""
+  }
 }
 
 
@@ -288,23 +289,11 @@ searchInput.addEventListener('keydown', (e) => {
   }
 });
 
-// if user types manually, show fields once they focus the first field
-inputs.section.addEventListener('focus', showOrgDetails);
-
-
-// ???????
-document.addEventListener("click", (e) => {
-  if (!(e.target as HTMLElement).closest(".position-relative")) {
-    resultsContainer.innerHTML = ""
-  }
-})
 
 
 // Update preview as user types
 Object.values(inputs).forEach(input => {
-  if (input.id !== 'logo') {
-    input.addEventListener('input', updateSignature)
-  }
+  input.addEventListener('input', updateSignature)
 })
 
 
@@ -316,4 +305,5 @@ toggleHtmlBtn.addEventListener('click', () => {
 
 
 // Init
+updateSignature()
 initOrganisations()
