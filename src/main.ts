@@ -5,7 +5,6 @@ import type { Section } from "./api"
 
 
 let organisations: Section[] = []
-let validState: boolean = false
 
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
