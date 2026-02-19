@@ -137,10 +137,18 @@ const mandatoryFields: (keyof typeof inputs)[] = [
 ];
 
 
-
+function showErrorMessage(message: string) {
+  const el = document.getElementById("error");
+  if (el) el.textContent = message;
+}
 
 async function initOrganisations() {
-  organisations = await loadActiveOrgs()
+  try {
+    const organisations = await loadActiveOrgs();
+  } catch (error) {
+    console.error("Failed to fetch data from ESN API:", error);
+    showErrorMessage("Failed to load organisations. Please try again later.");
+  }
 }
 
 function renderResults(filtered: ESNOrg[]) {
