@@ -76,8 +76,10 @@ async function loadSections(): Promise<ESNOrgApi[]> {
 
 
 export async function loadActiveOrgs(): Promise<ESNOrg[]> {
-    const countries: ESNOrgApi[] = await loadCountries()
-    const sections: ESNOrgApi[] = await loadSections()
+    const [countries, sections] = await Promise.all([
+      loadCountries(),
+      loadSections()
+    ]);
 
     const activeOrgs = countries.concat(sections)
         .filter(org => org.state === "active")
