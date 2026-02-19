@@ -1,10 +1,10 @@
 import './styles.scss'
 import 'bootstrap';
-import { loadActiveSections } from "./api"
-import type { Section } from "./api"
+import { loadActiveOrgs } from "./api"
+import type { ESNOrg } from "./api"
 
 
-let organisations: Section[] = []
+let organisations: ESNOrg[] = []
 
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -135,10 +135,10 @@ const mandatoryFields: (keyof typeof inputs)[] = [
 
 
 async function initOrganisations() {
-  organisations = await loadActiveSections()
+  organisations = await loadActiveOrgs()
 }
 
-function renderResults(filtered: Section[]) {
+function renderResults(filtered: ESNOrg[]) {
   resultsContainer.innerHTML = filtered
     .map(org => `
       <div class="list-group-item list-group-item-action" data-code="${org.code}">
@@ -224,7 +224,7 @@ function updateSignature() {
 }
 
 
-function populateForm(section: Section) {
+function populateForm(section: ESNOrg) {
   inputs.section.value = section.label
   inputs.address.value = section.address
   inputs.website.value = section.website

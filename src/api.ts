@@ -1,4 +1,4 @@
-interface SectionApi {
+interface ESNOrgApi {
     label: string
     code: string
     email: string
@@ -36,7 +36,7 @@ interface SectionApi {
     status: boolean
 }
 
-export interface Section {
+export interface ESNOrg {
     label: string
     code: string
     website: string
@@ -48,32 +48,49 @@ export interface Section {
 }
 
 
-function getAddress(section: SectionApi): string {
+function getAddress(section: ESNOrgApi): string {
     const adr = section.address
     return [adr.address_line1, adr.address_line2, adr.postal_code + " " + adr.locality].filter(Boolean).join("\n")
 }
 
-
-export async function loadActiveSections(): Promise<Section[]> {
-    const response = await fetch("https://accounts.esn.org/api/v2/sections")
+async function loadCountries(): Promise<ESNOrgApi[]> {
+    const response = await fetch("api/api/v2/countries")
 
     if (!response.ok) {
-        throw new Error("Failed to load organisations")
+        throw new Error("Failed to load NOs")
     }
 
-    const data: SectionApi[] = await response.json()
-    const activeSections = data
+    return response.json()
+}
+
+async function loadSections(): Promise<ESNOrgApi[]> {
+    const response = await fetch("api/api/v2/sections")
+
+    if (!response.ok) {
+        throw new Error("Failed to load sections")
+    }
+
+    return response.json()
+}
+
+
+
+export async function loadActiveOrgs(): Promise<ESNOrg[]> {
+    const countries: ESNOrgApi[] = await loadCountries()
+    const sections: ESNOrgApi[] = await loadSections()
+
+    const activeOrgs = countries.concat(sections)
         .filter(org => org.state === "active")
         .sort((a, b) => a.code.localeCompare(b.code));
 
-    return activeSections.map(apiSection => ({
-        label: apiSection.label,
-        code: apiSection.code,
-        website: apiSection.website,
-        address: getAddress(apiSection),
-        facebook: apiSection.facebook,
-        instagram: apiSection.instagram,
-        x: apiSection.twitter,
-        logo: apiSection.logo,
+    return activeOrgs.map(org => ({
+        label: org.label,
+        code: org.code,
+        website: org.website,
+        address: getAddress(org),
+        facebook: org.facebook,
+        instagram: org.instagram,
+        x: org.twitter,
+        logo: org.logo,
     }))
 }
