@@ -144,7 +144,7 @@ function showErrorMessage(message: string) {
 
 async function initOrganisations() {
   try {
-    const organisations = await loadActiveOrgs();
+    organisations = await loadActiveOrgs();
   } catch (error) {
     console.error("Failed to fetch data from ESN API:", error);
     showErrorMessage("Failed to load organisations. Please try again later.");
