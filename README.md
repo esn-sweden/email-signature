@@ -24,5 +24,5 @@ npm run dev
 npm run build
 ````
 
-[!NOTE]
-Using pinned sass at 1.78 to avoid very long deprecation warnings. See [issue](https://github.com/twbs/bootstrap/issues/40962).
+> [!NOTE]
+> Using pinned Sass at 1.78 to avoid very long deprecation warnings with Bootstrap. See [issue](https://github.com/twbs/bootstrap/issues/40962).
