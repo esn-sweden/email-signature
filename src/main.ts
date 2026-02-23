@@ -46,6 +46,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                     <input type="text" id="org-search" class="form-control form-control-lg"
                         placeholder="Start typing the name of your section/NO...">
                     <div id="org-results" class="list-group position-absolute w-100 shadow"></div>
+                    <button id="revealOrgInfo" class="btn btn-link">select manually</button>
                 </div>
 
                 <div id="org-details" class="d-none">
@@ -159,7 +160,9 @@ const htmlOutput = document.querySelector<HTMLTextAreaElement>('#htmlOutput')!
 const searchInput = document.querySelector<HTMLInputElement>("#org-search")!
 const resultsContainer = document.querySelector<HTMLDivElement>("#org-results")!
 const toggleHtmlBtn = document.querySelector<HTMLButtonElement>('#toggleHtmlBtn')!;
+const revealOrgBtn = document.querySelector<HTMLButtonElement>('#revealOrgInfo')!;
 const htmlContainer = document.querySelector<HTMLDivElement>('#htmlContainer')!;
+const details = document.querySelector<HTMLDivElement>('#org-details')!;
 
 const mandatoryFields: (keyof typeof inputs)[] = [
   "name",
@@ -196,8 +199,8 @@ function renderResults(filtered: ESNOrg[]) {
 }
 
 function showOrgDetails() {
-  const details = document.querySelector<HTMLDivElement>('#org-details')!;
   details.classList.remove('d-none');
+  revealOrgBtn.classList.add('d-none');
 }
 
 
@@ -370,6 +373,13 @@ toggleHtmlBtn.addEventListener('click', () => {
   htmlContainer.classList.toggle('d-none');
   toggleHtmlBtn.textContent = htmlContainer.classList.contains('d-none') ? 'Show HTML' : 'Hide HTML';
 });
+
+
+revealOrgBtn.addEventListener("click", (e) => {
+  e.preventDefault(); // prevent form submission
+  showOrgDetails()
+});
+
 
 
 // Init
