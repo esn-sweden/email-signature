@@ -35,14 +35,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 </div>
 
                 <div class="mb-3">
-                    <label for="linkedIn" class="form-label">LinkedIn (optional)</label>
-                    <input type="tel" id="linkedIn" class="form-control" />
+                    <label for="linkedinPers" class="form-label">LinkedIn (optional)</label>
+                    <input type="tel" id="linkedinPers" class="form-control" />
                 </div>
 
-                <h3>Section information</h3>
+                <h3>Organisation information</h3>
 
                 <div class="mb-4 position-relative">
-                    <label class="form-label fw-bold">Search Organisation</label>
+                    <label class="form-label fw-bold">Search organisation</label>
                     <input type="text" id="org-search" class="form-control form-control-lg"
                         placeholder="Start typing the name of your section/NO...">
                     <div id="org-results" class="list-group position-absolute w-100 shadow"></div>
@@ -50,12 +50,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
                 <div id="org-details" class="d-none">
                     <div class="mb-3">
-                        <label for="section" class="form-label">ESN section/country/body</label>
-                        <input type="text" id="section" class="form-control" placeholder="ESN Havana" />
+                        <label for="orgName" class="form-label">Name of ESN section/country</label>
+                        <input type="text" id="orgName" class="form-control" placeholder="ESN Havana" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="address" class="form-label">Section address</label>
+                        <label for="address" class="form-label">Address</label>
                         <textarea name="address" id="address" class="form-control" rows="4"
                             placeholder="Road1\nÅrhus\nSweden"></textarea>
                     </div>
@@ -72,26 +72,52 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
                     <h4>Social Media (optional)</h4>
 
+                    <p>Paste the links to your social media</p>
+
                     <div class="mb-3">
                         <label for="facebook" class="form-label">Facebook</label>
-                        <input type="text" id="facebook" class="form-control"
-                            placeholder="https://www.facebook.com/esn_havana/" />
+                        <input type="text" id="facebook" class="form-control" />
                     </div>
-
 
                     <div class="mb-3">
                         <label for="instagram" class="form-label">Instagram</label>
-                        <input type="text" id="instagram" class="form-control"
-                            placeholder="https://www.instagram.com/esn_havana/" />
+                        <input type="text" id="instagram" class="form-control" />
                     </div>
 
                     <div class="mb-3">
                         <label for="x" class="form-label">X</label>
-                        <input type="text" id="x" class="form-control" placeholder="https://x.com/esn_havana" />
+                        <input type="text" id="x" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="bluesky" class="form-label">Bluesky</label>
+                        <input type="text" id="bluesky" class="form-control" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="youtube" class="form-label">YouTube</label>
+                        <input type="text" id="youtube" class="form-control" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="linkedinOrg" class="form-label">LinkedIn</label>
+                        <input type="text" id="linkedinOrg" class="form-control" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="tiktok" class="form-label">TikTok</label>
+                        <input type="text" id="tiktok" class="form-control" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="flickr" class="form-label">Flickr</label>
+                        <input type="text" id="flickr" class="form-control" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="whatsapp" class="form-label">WhatsApp</label>
+                        <input type="text" id="whatsapp" class="form-control" value="" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="skype" class="form-label">Skype</label>
+                        <input type="text" id="skype" class="form-control" value="" />
                     </div>
                 </div>
-
-
             </form>
 
         </div>
@@ -111,14 +137,22 @@ const inputs = {
   title: document.querySelector<HTMLInputElement>('#title')!,
   email: document.querySelector<HTMLInputElement>('#email')!,
   phone: document.querySelector<HTMLInputElement>('#phone')!,
-  linkedIn: document.querySelector<HTMLInputElement>('#linkedIn')!,
+  linkedinPers: document.querySelector<HTMLInputElement>('#linkedinPers')!,
   logo: document.querySelector<HTMLInputElement>('#logo')!,
   address: document.querySelector<HTMLTextAreaElement>('#address')!,
-  section: document.querySelector<HTMLInputElement>('#section')!,
+  orgName: document.querySelector<HTMLInputElement>('#orgName')!,
   website: document.querySelector<HTMLInputElement>('#website')!,
   facebook: document.querySelector<HTMLInputElement>('#facebook')!,
   instagram: document.querySelector<HTMLInputElement>('#instagram')!,
   x: document.querySelector<HTMLInputElement>('#x')!,
+  bluesky: document.querySelector<HTMLInputElement>('#bluesky')!,
+  youtube: document.querySelector<HTMLInputElement>('#youtube')!,
+  linkedinOrg: document.querySelector<HTMLInputElement>('#linkedinOrg')!,
+  tiktok: document.querySelector<HTMLInputElement>('#flickr')!,
+  whatsapp: document.querySelector<HTMLInputElement>('#whatsapp')!,
+  skype: document.querySelector<HTMLInputElement>('#skype')!,
+
+
 }
 const preview = document.querySelector<HTMLDivElement>('#preview')!
 const htmlOutput = document.querySelector<HTMLTextAreaElement>('#htmlOutput')!
@@ -131,7 +165,7 @@ const mandatoryFields: (keyof typeof inputs)[] = [
   "name",
   "title",
   "email",
-  "section",
+  "orgName",
   "address",
   "logo",
 ];
@@ -184,16 +218,24 @@ function updateSignature() {
   const name = inputs.name.value
   const title = inputs.title.value
   const email = inputs.email.value
-  const section = inputs.section.value
+  const orgName = inputs.orgName.value
   const address = inputs.address.value.replace(/\n/g, "<br>")
   const website = inputs.website.value
   const websiteShort = website.replace(/^.*\:\/\//, "").replace(/\/+$/, "")
   const logo = inputs.logo.value
   const phone = inputs.phone.value
-  const linkedIn = inputs.linkedIn.value
+  const linkedinPers = inputs.linkedinPers.value
   const facebook = inputs.facebook.value
   const instagram = inputs.instagram.value
   const x = inputs.x.value
+  const bluesky = inputs.bluesky.value
+  const youtube = inputs.youtube.value
+  const linkedinOrg = inputs.linkedinOrg.value
+  const tiktok = inputs.tiktok.value
+  const whatsapp = inputs.whatsapp.value
+  const skype = inputs.skype.value
+
+
 
   const signatureHTML = `
 <div style="font-family:Arial, sans-serif; font-size:10pt; color:#000000; line-height:1.4;">
@@ -201,30 +243,48 @@ function updateSignature() {
     <i>${title}</i><br>
     <a href="mailto:${email}" style="color:#1155cc" target="_blank">${email}</a><br>
     ${phone ? `${phone}<br>` : ''}
-    ${linkedIn ? `LinkedIn: ${linkedIn}<br>` : ''}
+    ${linkedinPers ? `LinkedIn: ${linkedinPers}<br>` : ''}
     ——<br>
-    <b>${section}</b><br>
+    <b>${orgName}</b><br>
     ${address}<br>
     ${website ? `<a href="${website}" style="color:#1155cc" target="_blank">${websiteShort}</a><br>` : ''}
 
     <img src="${logo}" alt="ESN logo" style="width:140px; height:auto; margin:10px 0;"><br>
 
-    ${instagram ? `<a href="${instagram}" target="_blank" style="display:inline-block; margin:5px;">
-        <img width="20" height="20"
-            src=${icons.instagram}
-            alt="Instagram" style="vertical-align:middle; border:none;">
+    ${instagram ? `<a href="${instagram}" target="_blank" style="display:inline-block;">
+        <img width="20" height="20" src=${icons.instagram} alt="Instagram" style="vertical-align:middle; border:none;">
     </a>`: ''}
 
     ${facebook ? `<a href="${facebook}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20"
-            src=${icons.facebook}
-            alt="Facebook" style="vertical-align:middle; border:none;">
+        <img width="20" height="20" src=${icons.facebook} alt="Facebook" style="vertical-align:middle; border:none;">
     </a>`: ''}
 
     ${x ? `<a href="${x}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20"
-            src=${icons.x}
-            alt="X" style="vertical-align:middle; border:none;">
+        <img width="20" height="20" src=${icons.x} alt="X" style="vertical-align:middle; border:none;">
+    </a>`: ''}
+
+    ${bluesky ? `<a href="${bluesky}" target="_blank" style="display:inline-block;">
+        <img width="20" height="20" src=${icons.bluesky} alt="Bluesky" style="vertical-align:middle; border:none;">
+    </a>`: ''}
+
+    ${youtube ? `<a href="${youtube}" target="_blank" style="display:inline-block;">
+        <img width="20" height="20" src=${icons.youtube} alt="YouTube" style="vertical-align:middle; border:none;">
+    </a>`: ''}
+
+    ${linkedinOrg ? `<a href="${linkedinOrg}" target="_blank" style="display:inline-block;">
+        <img width="20" height="20" src=${icons.linkedin} alt="LinkedIn" style="vertical-align:middle; border:none;">
+    </a>`: ''}
+
+    ${tiktok ? `<a href="${tiktok}" target="_blank" style="display:inline-block;">
+        <img width="20" height="20" src=${icons.tiktok} alt="TikTok" style="vertical-align:middle; border:none;">
+    </a>`: ''}
+
+    ${whatsapp ? `<a href="${whatsapp}" target="_blank" style="display:inline-block;">
+        <img width="20" height="20" src=${icons.whatsapp} alt="WhatsApp" style="vertical-align:middle; border:none;">
+    </a>`: ''}
+
+    ${skype ? `<a href="${skype}" target="_blank" style="display:inline-block;">
+        <img width="20" height="20" src=${icons.skype} alt="Skype" style="vertical-align:middle; border:none;">
     </a>`: ''}
 </div>
 `.trim()
@@ -240,7 +300,7 @@ function updateSignature() {
 
 
 function populateForm(section: ESNOrg) {
-  inputs.section.value = section.label
+  inputs.orgName.value = section.label
   inputs.address.value = section.address
   inputs.website.value = section.website
   inputs.logo.value = section.logo
