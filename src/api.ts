@@ -54,7 +54,7 @@ function getAddress(section: ESNOrgApi): string {
 }
 
 async function loadCountries(): Promise<ESNOrgApi[]> {
-    const response = await fetch("api/api/v2/countries")
+    const response = await fetch("api/v2/countries")
 
     if (!response.ok) {
         throw new Error("Failed to load NOs")
@@ -64,7 +64,7 @@ async function loadCountries(): Promise<ESNOrgApi[]> {
 }
 
 async function loadSections(): Promise<ESNOrgApi[]> {
-    const response = await fetch("api/api/v2/sections")
+    const response = await fetch("api/v2/sections")
 
     if (!response.ok) {
         throw new Error("Failed to load sections")
