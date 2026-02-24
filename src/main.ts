@@ -6,7 +6,6 @@ import { icons } from './icons';
 
 interface Model {
   searchResults: ESNOrg[]
-  org: ESNOrg | null
   showOrgDetails: boolean
   showHTML: boolean
   ESNOrgs: ESNOrg[]
@@ -15,7 +14,6 @@ interface Model {
 
 let model: Model = {
   searchResults: [],
-  org: null,
   showOrgDetails: false,
   showHTML: false,
   ESNOrgs: [],
@@ -195,16 +193,6 @@ const mandatoryFields: (keyof typeof inputs)[] = [
 
 function view() {
 
-  if (model.org) {
-    inputs.orgName.value = model.org.label
-    inputs.address.value = model.org.address
-    inputs.website.value = model.org.website
-    inputs.logo.value = model.org.logo
-    inputs.facebook.value = model.org.facebook
-    inputs.instagram.value = model.org.instagram
-    inputs.x.value = model.org.x
-  }
-
   if (model.showOrgDetails) {
     details.classList.remove('d-none');
     revealOrgBtn.classList.add('d-none');
@@ -357,6 +345,16 @@ async function initOrganisations() {
 }
 
 
+function populateOrgInfo(org: ESNOrg) {
+  inputs.orgName.value = org.label
+  inputs.address.value = org.address
+  inputs.website.value = org.website
+  inputs.logo.value = org.logo
+  inputs.facebook.value = org.facebook
+  inputs.instagram.value = org.instagram
+  inputs.x.value = org.x
+}
+
 
 
 
@@ -387,7 +385,7 @@ resultsContainer.addEventListener("click", async (e) => {
 
   if (!fullData) return
 
-  model.org = fullData
+  populateOrgInfo(fullData)
   model.showOrgDetails = true
   searchInput.value = fullData.label
   model.searchResults = []
