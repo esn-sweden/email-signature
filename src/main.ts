@@ -240,6 +240,7 @@ function view() {
   const logo = inputs.logo.value
   const phone = inputs.phone.value
   const linkedinPers = inputs.linkedinPers.value
+  const linkedinPersUsername = linkedinPers.replace(/.*linkedin\.com\/in\/([\w.-]+)\/.*/, "$1")
   const facebook = inputs.facebook.value
   const instagram = inputs.instagram.value
   const x = inputs.x.value
@@ -257,7 +258,7 @@ function view() {
     <i>${title}</i><br>
     <a href="mailto:${email}" style="color:#1155cc" target="_blank">${email}</a><br>
     ${phone ? `${phone}<br>` : ''}
-    ${linkedinPers ? `LinkedIn: ${linkedinPers}<br>` : ''}
+    ${linkedinPers ? `LinkedIn: <a href="${linkedinPers}" style="color:#1155cc" target="_blank">${linkedinPersUsername}</a><br>` : ''}
     ——<br>
     <b>${orgName}</b><br>
     ${address}<br>
