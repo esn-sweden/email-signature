@@ -4,8 +4,23 @@ import { loadActiveOrgs } from "./api"
 import type { ESNOrg } from "./api"
 import { icons } from './icons';
 
+interface Model {
+  searchResults: ESNOrg[]
+  org: ESNOrg | null
+  showOrgDetails: boolean
+  showHTML: boolean
+  ESNOrgs: ESNOrg[]
+  apiError: string
+}
 
-let organisations: ESNOrg[] = []
+let model: Model = {
+  searchResults: [],
+  org: null,
+  showOrgDetails: false,
+  showHTML: false,
+  ESNOrgs: [],
+  apiError: "",
+}
 
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -48,6 +63,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                     <div id="org-results" class="list-group position-absolute w-100 shadow"></div>
                     <button id="revealOrgInfo" class="btn btn-link">select manually</button>
                 </div>
+
+                <div id="error" class="alert alert-danger p-3 mb-3 d-none" role="alert"></div>
 
                 <div id="org-details" class="d-none">
                     <div class="mb-3">
@@ -174,49 +191,55 @@ const mandatoryFields: (keyof typeof inputs)[] = [
 ];
 
 
-function showErrorMessage(message: string) {
-  const el = document.getElementById("error");
-  if (el) el.textContent = message;
-}
 
-async function initOrganisations() {
-  try {
-    organisations = await loadActiveOrgs();
-  } catch (error) {
-    console.error("Failed to fetch data from ESN API:", error);
-    showErrorMessage("Failed to load organisations. Please try again later.");
+function view() {
+
+  if (model.org) {
+    inputs.orgName.value = model.org.label
+    inputs.address.value = model.org.address
+    inputs.website.value = model.org.website
+    inputs.logo.value = model.org.logo
+    inputs.facebook.value = model.org.facebook
+    inputs.instagram.value = model.org.instagram
+    inputs.x.value = model.org.x
   }
-}
 
-function renderResults(filtered: ESNOrg[]) {
-  resultsContainer.innerHTML = filtered
-    .map(org => `
+  if (model.showOrgDetails) {
+    details.classList.remove('d-none');
+    revealOrgBtn.classList.add('d-none');
+  }
+
+  if (model.showHTML) {
+    htmlContainer.classList.remove('d-none');
+    toggleHtmlBtn.textContent = 'Hide HTML';
+  } else {
+    htmlContainer.classList.add('d-none');
+    toggleHtmlBtn.textContent = 'Show HTML';
+  }
+
+  if (model.searchResults.length > 0) {
+    resultsContainer.innerHTML = model.searchResults
+      .map(org => `
       <div class="list-group-item list-group-item-action" data-code="${org.code}">
         ${org.label}
       </div>
     `)
-    .join("")
-}
+      .join("")
+  } else {
+    resultsContainer.innerHTML = ''
+  }
 
-function showOrgDetails() {
-  details.classList.remove('d-none');
-  revealOrgBtn.classList.add('d-none');
-}
+  const el = document.getElementById("error");
+  if (el) el.textContent = model.apiError;
+  if (model.apiError) {
+    el?.classList.remove("d-none")
+  } else {
+    el?.classList.add("d-none")
+  }
 
 
-function updateSignature() {
 
-  let errorCount = 0;
-  mandatoryFields.forEach(key => {
-    const input = inputs[key];
 
-    if (!input.value.trim()) {
-      input.classList.add("is-invalid");
-      errorCount++;
-    } else {
-      input.classList.remove("is-invalid");
-    }
-  });
 
   const name = inputs.name.value
   const title = inputs.title.value
@@ -237,8 +260,6 @@ function updateSignature() {
   const tiktok = inputs.tiktok.value
   const whatsapp = inputs.whatsapp.value
   const skype = inputs.skype.value
-
-
 
   const signatureHTML = `
 <div style="font-family:Arial, sans-serif; font-size:10pt; color:#000000; line-height:1.4;">
@@ -292,6 +313,20 @@ function updateSignature() {
 </div>
 `.trim()
 
+
+  let errorCount = 0;
+  mandatoryFields.forEach(key => {
+    const input = inputs[key];
+
+    if (!input.value.trim()) {
+      input.classList.add("is-invalid");
+      errorCount++;
+    } else {
+      input.classList.remove("is-invalid");
+    }
+  });
+
+
   if (errorCount == 0) {
     preview.innerHTML = signatureHTML
     htmlOutput.value = signatureHTML
@@ -299,20 +334,22 @@ function updateSignature() {
     preview.innerHTML = "Fill in the required fields to see the signature"
     htmlOutput.value = ""
   }
+
 }
 
 
-function populateForm(section: ESNOrg) {
-  inputs.orgName.value = section.label
-  inputs.address.value = section.address
-  inputs.website.value = section.website
-  inputs.logo.value = section.logo
-  inputs.facebook.value = section.facebook
-  inputs.instagram.value = section.instagram
-  inputs.x.value = section.x
 
-  updateSignature()
+
+
+async function initOrganisations() {
+  try {
+    model.ESNOrgs = await loadActiveOrgs();
+  } catch (error) {
+    console.error("Failed to fetch data from ESN API:", error);
+    model.apiError = "Failed to load organisations. Please try again later.";
+  }
 }
+
 
 
 
@@ -323,11 +360,9 @@ function populateForm(section: ESNOrg) {
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase()
 
-  const filtered = organisations.filter(org =>
-    org.label.toLowerCase().includes(query)
-  )
-
-  renderResults(filtered.slice(0, 10)) // limit results
+  model.searchResults = model.ESNOrgs.filter(org =>
+    org.label.toLowerCase().includes(query)).slice(0, 10) // limit to 10 results
+  view()
 })
 
 // Selecting a result from the drop-down
@@ -337,14 +372,15 @@ resultsContainer.addEventListener("click", async (e) => {
   if (!item) return
 
   const code = item.dataset.code!
-  const fullData = organisations.find(s => s.code === code)
+  const fullData = model.ESNOrgs.find(s => s.code === code)
 
   if (!fullData) return
 
-  populateForm(fullData)
-  showOrgDetails();
+  model.org = fullData
+  model.showOrgDetails = true
   searchInput.value = fullData.label
-  resultsContainer.innerHTML = ""
+  model.searchResults = []
+  view()
 })
 
 
@@ -364,24 +400,29 @@ searchInput.addEventListener('keydown', (e) => {
 
 // Update preview as user types
 Object.values(inputs).forEach(input => {
-  input.addEventListener('input', updateSignature)
+  input.addEventListener('input', view)
 })
 
 
 // Show HTML
 toggleHtmlBtn.addEventListener('click', () => {
-  htmlContainer.classList.toggle('d-none');
-  toggleHtmlBtn.textContent = htmlContainer.classList.contains('d-none') ? 'Show HTML' : 'Hide HTML';
+  if (model.showHTML) {
+    model.showHTML = false
+  } else {
+    model.showHTML = true
+  }
+  view()
 });
 
 
 revealOrgBtn.addEventListener("click", (e) => {
   e.preventDefault(); // prevent form submission
-  showOrgDetails()
+  model.showOrgDetails = true
+  view()
 });
 
 
 
 // Init
-updateSignature()
+view()
 initOrganisations()
