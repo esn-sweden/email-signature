@@ -103,8 +103,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                     </div>
 
                     <div class="mb-3">
-                        <label for="x" class="form-label">X</label>
-                        <input type="text" id="x" class="form-control" />
+                        <label for="twitter" class="form-label">X</label>
+                        <input type="text" id="twitter" class="form-control" />
                     </div>
 
                     <div class="mb-3">
@@ -162,11 +162,12 @@ const inputs = {
   website: document.querySelector<HTMLInputElement>('#website')!,
   facebook: document.querySelector<HTMLInputElement>('#facebook')!,
   instagram: document.querySelector<HTMLInputElement>('#instagram')!,
-  x: document.querySelector<HTMLInputElement>('#x')!,
+  x: document.querySelector<HTMLInputElement>('#twitter')!,
   bluesky: document.querySelector<HTMLInputElement>('#bluesky')!,
   youtube: document.querySelector<HTMLInputElement>('#youtube')!,
   linkedinOrg: document.querySelector<HTMLInputElement>('#linkedinOrg')!,
-  tiktok: document.querySelector<HTMLInputElement>('#flickr')!,
+  tiktok: document.querySelector<HTMLInputElement>('#tiktok')!,
+  flickr: document.querySelector<HTMLInputElement>('#flickr')!,
   whatsapp: document.querySelector<HTMLInputElement>('#whatsapp')!,
   skype: document.querySelector<HTMLInputElement>('#skype')!,
 
@@ -258,6 +259,7 @@ function view() {
   const youtube = inputs.youtube.value
   const linkedinOrg = inputs.linkedinOrg.value
   const tiktok = inputs.tiktok.value
+  const flickr = inputs.flickr.value
   const whatsapp = inputs.whatsapp.value
   const skype = inputs.skype.value
 
@@ -301,6 +303,10 @@ function view() {
 
     ${tiktok ? `<a href="${tiktok}" target="_blank" style="display:inline-block;">
         <img width="20" height="20" src=${icons.tiktok} alt="TikTok" style="vertical-align:middle; border:none;">
+    </a>`: ''}
+
+    ${flickr ? `<a href="${flickr}" target="_blank" style="display:inline-block;">
+        <img width="20" height="20" src=${icons.flickr} alt="TikTok" style="vertical-align:middle; border:none;">
     </a>`: ''}
 
     ${whatsapp ? `<a href="${whatsapp}" target="_blank" style="display:inline-block;">
