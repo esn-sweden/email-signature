@@ -360,9 +360,14 @@ async function initOrganisations() {
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase()
 
-  model.searchResults = model.ESNOrgs.filter(org =>
-    org.label.toLowerCase().includes(query)).slice(0, 10) // limit to 10 results
-  view()
+  if (query) {
+    model.searchResults = model.ESNOrgs.filter(org =>
+      org.label.toLowerCase().includes(query)).slice(0, 10) // limit to 10 results
+    view()
+  } else {
+    model.searchResults = []
+    view()
+  }
 })
 
 // Selecting a result from the drop-down
