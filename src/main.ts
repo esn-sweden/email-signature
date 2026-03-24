@@ -8,7 +8,6 @@ import DOMPurify from "dompurify";
 interface Model {
   searchResults: ESNOrg[];
   showOrgDetails: boolean;
-  showHTML: boolean;
   ESNOrgs: ESNOrg[];
   apiError: string;
 }
@@ -16,7 +15,6 @@ interface Model {
 let model: Model = {
   searchResults: [],
   showOrgDetails: false,
-  showHTML: false,
   ESNOrgs: [],
   apiError: "",
 };
@@ -43,16 +41,12 @@ const inputs = {
   skype: document.querySelector<HTMLInputElement>("#skype")!,
 };
 const preview = document.querySelector<HTMLDivElement>("#preview")!;
-const htmlOutput = document.querySelector<HTMLTextAreaElement>("#htmlOutput")!;
 const searchInput = document.querySelector<HTMLInputElement>("#org-search")!;
 const resultsContainer =
   document.querySelector<HTMLDivElement>("#org-results")!;
 const copyBtn = document.querySelector<HTMLButtonElement>("#copy-btn")!;
-const toggleHtmlBtn =
-  document.querySelector<HTMLButtonElement>("#toggleHtmlBtn")!;
 const revealOrgBtn =
   document.querySelector<HTMLButtonElement>("#revealOrgInfo")!;
-const htmlContainer = document.querySelector<HTMLDivElement>("#htmlContainer")!;
 const details = document.querySelector<HTMLDivElement>("#org-details")!;
 const copyStatus = document.querySelector<HTMLSpanElement>("#copy-status")!;
 
@@ -69,14 +63,6 @@ function view() {
   if (model.showOrgDetails) {
     details.classList.remove("d-none");
     revealOrgBtn.classList.add("d-none");
-  }
-
-  if (model.showHTML) {
-    htmlContainer.classList.remove("d-none");
-    toggleHtmlBtn.textContent = "Hide HTML";
-  } else {
-    htmlContainer.classList.add("d-none");
-    toggleHtmlBtn.textContent = "Show HTML";
   }
 
   if (model.searchResults.length > 0) {
@@ -236,10 +222,8 @@ function view() {
 
   if (errorCount == 0) {
     preview.innerHTML = DOMPurify.sanitize(signatureHTML);
-    htmlOutput.value = signatureHTML;
   } else {
     preview.innerHTML = "Fill in the required fields to see the signature";
-    htmlOutput.value = "";
   }
 }
 
@@ -313,16 +297,6 @@ searchInput.addEventListener("keydown", (e) => {
 // Update preview as user types
 Object.values(inputs).forEach((input) => {
   input.addEventListener("input", view);
-});
-
-// Show HTML
-toggleHtmlBtn.addEventListener("click", () => {
-  if (model.showHTML) {
-    model.showHTML = false;
-  } else {
-    model.showHTML = true;
-  }
-  view();
 });
 
 revealOrgBtn.addEventListener("click", (e) => {
