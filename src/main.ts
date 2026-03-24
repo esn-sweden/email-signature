@@ -3,6 +3,7 @@ import "bootstrap";
 import { loadActiveOrgs } from "./api";
 import type { ESNOrg } from "./api";
 import { icons } from "./icons";
+import DOMPurify from "dompurify";
 
 interface Model {
   searchResults: ESNOrg[];
@@ -232,7 +233,7 @@ function view() {
   });
 
   if (errorCount == 0) {
-    preview.innerHTML = signatureHTML;
+    preview.innerHTML = DOMPurify.sanitize(signatureHTML);
     htmlOutput.value = signatureHTML;
   } else {
     preview.innerHTML = "Fill in the required fields to see the signature";
