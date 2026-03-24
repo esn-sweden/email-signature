@@ -47,12 +47,14 @@ const htmlOutput = document.querySelector<HTMLTextAreaElement>("#htmlOutput")!;
 const searchInput = document.querySelector<HTMLInputElement>("#org-search")!;
 const resultsContainer =
   document.querySelector<HTMLDivElement>("#org-results")!;
+const copyBtn = document.querySelector<HTMLButtonElement>("#copy-btn")!;
 const toggleHtmlBtn =
   document.querySelector<HTMLButtonElement>("#toggleHtmlBtn")!;
 const revealOrgBtn =
   document.querySelector<HTMLButtonElement>("#revealOrgInfo")!;
 const htmlContainer = document.querySelector<HTMLDivElement>("#htmlContainer")!;
 const details = document.querySelector<HTMLDivElement>("#org-details")!;
+const copyStatus = document.querySelector<HTMLSpanElement>("#copy-status")!;
 
 const mandatoryFields: (keyof typeof inputs)[] = [
   "name",
@@ -327,6 +329,19 @@ revealOrgBtn.addEventListener("click", (e) => {
   e.preventDefault(); // prevent form submission
   model.showOrgDetails = true;
   view();
+});
+
+copyBtn.addEventListener("click", () => {
+  const html = preview.innerHTML;
+  const blob = new Blob([html], { type: "text/html" });
+  const data = [new ClipboardItem({ "text/html": blob })];
+
+  navigator.clipboard.write(data);
+
+  copyStatus.style.display = "inline";
+  setTimeout(() => {
+    copyStatus.style.display = "none";
+  }, 2000);
 });
 
 // Init

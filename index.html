@@ -186,6 +186,10 @@
             id="preview"
             class="border border-3 border-primary rounded p-3 mb-3"
           ></div>
+          <button id="copy-btn" class="btn btn-primary">Copy signature</button>
+          <span id="copy-status" style="display: none; margin-left: 8px">
+            Copied!
+          </span>
           <button id="toggleHtmlBtn" class="btn">Show HTML</button>
           <div id="htmlContainer" class="d-none">
             <textarea
@@ -195,6 +199,7 @@
               readonly
             ></textarea>
           </div>
+
           <h3>Instructions</h3>
           <ol>
             <li>
