@@ -17,26 +17,53 @@
 
             <div class="mb-3">
               <label for="name" class="form-label">Full Name</label>
-              <input type="text" id="name" class="form-control" />
+              <input
+                type="text"
+                id="name"
+                autocomplete="name"
+                class="form-control"
+              />
             </div>
             <div class="mb-3">
-              <label for="title" class="form-label">Position</label>
-              <input type="text" id="title" class="form-control" />
+              <label for="organization-title" class="form-label"
+                >Position</label
+              >
+              <input
+                type="text"
+                id="title"
+                autocomplete="organization-title"
+                class="form-control"
+              />
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <input type="email" id="email" class="form-control" />
+              <input
+                type="email"
+                id="email"
+                autocomplete="work email"
+                class="form-control"
+              />
             </div>
             <div class="mb-3">
               <label for="phone" class="form-label">Phone (optional)</label>
-              <input type="tel" id="phone" class="form-control" />
+              <input
+                type="tel"
+                id="phone"
+                autocomplete="work tel"
+                class="form-control"
+              />
             </div>
 
             <div class="mb-3">
               <label for="linkedinPers" class="form-label"
                 >LinkedIn (optional)</label
               >
-              <input type="text" id="linkedinPers" class="form-control" />
+              <input
+                type="text"
+                id="linkedinPers"
+                autocomplete="url"
+                class="form-control"
+              />
             </div>
 
             <h3>Organisation information</h3>
@@ -46,6 +73,7 @@
               <input
                 type="text"
                 id="org-search"
+                autocomplete="organization"
                 class="form-control form-control-lg"
                 placeholder="Start typing the name of your section/NO..."
               />
