@@ -124,7 +124,7 @@ function view() {
     ${address}<br>
     ${website ? `<a href="${website}" style="color:#1155cc" target="_blank">${websiteShort}</a><br>` : ""}
 
-    <img src="${logo}" alt="ESN logo" style="width:140px; height:auto; margin:10px 0;"><br>
+    <img src="${logo}" alt="${orgName} logo" style="width:140px; height:auto; margin:10px 0;"><br>
 
     ${
       instagram
