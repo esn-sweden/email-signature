@@ -20,36 +20,38 @@ let model: Model = {
 };
 
 const inputs = {
-  name: document.querySelector<HTMLInputElement>("#name")!,
-  title: document.querySelector<HTMLInputElement>("#title")!,
-  email: document.querySelector<HTMLInputElement>("#email")!,
-  phone: document.querySelector<HTMLInputElement>("#phone")!,
-  linkedinPers: document.querySelector<HTMLInputElement>("#linkedinPers")!,
-  logo: document.querySelector<HTMLInputElement>("#logo")!,
-  address: document.querySelector<HTMLTextAreaElement>("#address")!,
-  orgName: document.querySelector<HTMLInputElement>("#orgName")!,
-  website: document.querySelector<HTMLInputElement>("#website")!,
-  facebook: document.querySelector<HTMLInputElement>("#facebook")!,
-  instagram: document.querySelector<HTMLInputElement>("#instagram")!,
-  x: document.querySelector<HTMLInputElement>("#twitter")!,
-  bluesky: document.querySelector<HTMLInputElement>("#bluesky")!,
-  youtube: document.querySelector<HTMLInputElement>("#youtube")!,
-  linkedinOrg: document.querySelector<HTMLInputElement>("#linkedinOrg")!,
-  tiktok: document.querySelector<HTMLInputElement>("#tiktok")!,
-  flickr: document.querySelector<HTMLInputElement>("#flickr")!,
-  whatsapp: document.querySelector<HTMLInputElement>("#whatsapp")!,
-  skype: document.querySelector<HTMLInputElement>("#skype")!,
+  name: document.getElementById("name") as HTMLInputElement,
+  title: document.getElementById("title") as HTMLInputElement,
+  email: document.getElementById("email") as HTMLInputElement,
+  phone: document.getElementById("phone") as HTMLInputElement,
+  linkedinPers: document.getElementById("linkedinPers") as HTMLInputElement,
+  logo: document.getElementById("logo") as HTMLInputElement,
+  address: document.getElementById("address") as HTMLTextAreaElement,
+  orgName: document.getElementById("orgName") as HTMLInputElement,
+  website: document.getElementById("website") as HTMLInputElement,
+  facebook: document.getElementById("facebook") as HTMLInputElement,
+  instagram: document.getElementById("instagram") as HTMLInputElement,
+  x: document.getElementById("twitter") as HTMLInputElement,
+  bluesky: document.getElementById("bluesky") as HTMLInputElement,
+  youtube: document.getElementById("youtube") as HTMLInputElement,
+  linkedinOrg: document.getElementById("linkedinOrg") as HTMLInputElement,
+  tiktok: document.getElementById("tiktok") as HTMLInputElement,
+  flickr: document.getElementById("flickr") as HTMLInputElement,
+  whatsapp: document.getElementById("whatsapp") as HTMLInputElement,
+  skype: document.getElementById("skype") as HTMLInputElement,
 };
-const preview = document.querySelector<HTMLDivElement>("#preview")!;
-const searchInput = document.querySelector<HTMLInputElement>("#org-search")!;
-const resultsContainer =
-  document.querySelector<HTMLDivElement>("#org-results")!;
-const copyBtn = document.querySelector<HTMLButtonElement>("#copy-btn")!;
-const revealOrgBtn =
-  document.querySelector<HTMLButtonElement>("#revealOrgInfo")!;
-const details = document.querySelector<HTMLDivElement>("#org-details")!;
-const copyStatus = document.querySelector<HTMLSpanElement>("#copy-status")!;
-const copyError = document.getElementById("copy-error")!;
+const preview = document.getElementById("preview") as HTMLDivElement;
+const searchInput = document.getElementById("org-search") as HTMLInputElement;
+const resultsContainer = document.getElementById(
+  "org-results",
+) as HTMLDivElement;
+const copyBtn = document.getElementById("copy-btn") as HTMLButtonElement;
+const revealOrgBtn = document.getElementById(
+  "revealOrgInfo",
+) as HTMLButtonElement;
+const details = document.getElementById("org-details") as HTMLDivElement;
+const copyStatus = document.getElementById("copy-status") as HTMLSpanElement;
+const copyError = document.getElementById("copy-error") as HTMLSpanElement;
 
 const mandatoryFields: (keyof typeof inputs)[] = [
   "name",
@@ -115,97 +117,97 @@ function view() {
 
   const signatureHTML = `
 <div style="font-family:Arial, sans-serif; font-size:10pt; color:#000000; line-height:1.4;">
-    <b>${name}</b><br>
-    <i>${title}</i><br>
-    <a href="mailto:${email}" style="color:#1155cc" target="_blank">${email}</a><br>
-    ${phone ? `${phone}<br>` : ""}
-    ${linkedinPers ? `LinkedIn: <a href="${linkedinPers}" style="color:#1155cc" target="_blank">${linkedinPersUsername}</a><br>` : ""}
-    ——<br>
-    <b>${orgName}</b><br>
-    ${address}<br>
-    ${website ? `<a href="${website}" style="color:#1155cc" target="_blank">${websiteShort}</a><br>` : ""}
+<b>${name}</b><br>
+<i>${title}</i><br>
+<a href="mailto:${email}" style="color:#1155cc" target="_blank">${email}</a><br>
+${phone ? `${phone}<br>` : ""}
+${linkedinPers ? `LinkedIn: <a href="${linkedinPers}" style="color:#1155cc" target="_blank">${linkedinPersUsername}</a><br>` : ""}
+——<br>
+<b>${orgName}</b><br>
+${address}<br>
+${website ? `<a href="${website}" style="color:#1155cc" target="_blank">${websiteShort}</a><br>` : ""}
 
-    <img src="${logo}" alt="${orgName} logo" style="width:140px; height:auto; margin:10px 0;"><br>
+<img src="${logo}" alt="${orgName} logo" style="width:140px; height:auto; margin:10px 0;"><br>
 
-    ${
-      instagram
-        ? `<a href="${instagram}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.instagram} alt="Instagram" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  instagram
+    ? `<a href="${instagram}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.instagram} alt="Instagram" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      facebook
-        ? `<a href="${facebook}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.facebook} alt="Facebook" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  facebook
+    ? `<a href="${facebook}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.facebook} alt="Facebook" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      x
-        ? `<a href="${x}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.x} alt="X" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  x
+    ? `<a href="${x}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.x} alt="X" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      bluesky
-        ? `<a href="${bluesky}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.bluesky} alt="Bluesky" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  bluesky
+    ? `<a href="${bluesky}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.bluesky} alt="Bluesky" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      youtube
-        ? `<a href="${youtube}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.youtube} alt="YouTube" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  youtube
+    ? `<a href="${youtube}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.youtube} alt="YouTube" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      linkedinOrg
-        ? `<a href="${linkedinOrg}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.linkedin} alt="LinkedIn" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  linkedinOrg
+    ? `<a href="${linkedinOrg}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.linkedin} alt="LinkedIn" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      tiktok
-        ? `<a href="${tiktok}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.tiktok} alt="TikTok" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  tiktok
+    ? `<a href="${tiktok}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.tiktok} alt="TikTok" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      flickr
-        ? `<a href="${flickr}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.flickr} alt="TikTok" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  flickr
+    ? `<a href="${flickr}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.flickr} alt="TikTok" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      whatsapp
-        ? `<a href="${whatsapp}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.whatsapp} alt="WhatsApp" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  whatsapp
+    ? `<a href="${whatsapp}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.whatsapp} alt="WhatsApp" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 
-    ${
-      skype
-        ? `<a href="${skype}" target="_blank" style="display:inline-block;">
-        <img width="20" height="20" src=${icons.skype} alt="Skype" style="vertical-align:middle; border:none;">
-    </a>`
-        : ""
-    }
+${
+  skype
+    ? `<a href="${skype}" target="_blank" style="display:inline-block;">
+    <img width="20" height="20" src=${icons.skype} alt="Skype" style="vertical-align:middle; border:none;">
+</a>`
+    : ""
+}
 </div>
 `.trim();
 
@@ -312,9 +314,13 @@ async function copyToClipboard() {
   try {
     if (ClipboardItem.supports("text/html")) {
       const blob = new Blob([preview.innerHTML], { type: "text/html" });
+      const plainBlob = new Blob([preview.innerText.trim()], {
+        type: "text/plain",
+      });
       await navigator.clipboard.write([
         new ClipboardItem({
           [blob.type]: blob,
+          [plainBlob.type]: plainBlob,
         }),
       ]);
 
@@ -323,6 +329,7 @@ async function copyToClipboard() {
         copyStatus.style.display = "none";
       }, 2000);
     } else {
+      await navigator.clipboard.writeText(preview.innerText.trim());
       copyError.classList.remove("d-none");
       setTimeout(() => {
         copyError.classList.add("d-none");
