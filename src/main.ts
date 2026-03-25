@@ -312,29 +312,21 @@ copyBtn.addEventListener("click", copyToClipboard);
 
 async function copyToClipboard() {
   try {
-    if (ClipboardItem.supports("text/html")) {
-      const blob = new Blob([preview.innerHTML], { type: "text/html" });
-      const plainBlob = new Blob([preview.innerText.trim()], {
-        type: "text/plain",
-      });
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          [blob.type]: blob,
-          [plainBlob.type]: plainBlob,
-        }),
-      ]);
+    const blob = new Blob([preview.innerHTML], { type: "text/html" });
+    const plainBlob = new Blob([preview.innerText.trim()], {
+      type: "text/plain",
+    });
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        [blob.type]: blob,
+        [plainBlob.type]: plainBlob,
+      }),
+    ]);
 
-      copyStatus.style.display = "inline";
-      setTimeout(() => {
-        copyStatus.style.display = "none";
-      }, 2000);
-    } else {
-      await navigator.clipboard.writeText(preview.innerText.trim());
-      copyError.classList.remove("d-none");
-      setTimeout(() => {
-        copyError.classList.add("d-none");
-      }, 5000);
-    }
+    copyStatus.style.display = "inline";
+    setTimeout(() => {
+      copyStatus.style.display = "none";
+    }, 2000);
   } catch (err) {
     copyError.classList.remove("d-none");
     setTimeout(() => {
