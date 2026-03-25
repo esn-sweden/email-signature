@@ -49,6 +49,7 @@ const revealOrgBtn =
   document.querySelector<HTMLButtonElement>("#revealOrgInfo")!;
 const details = document.querySelector<HTMLDivElement>("#org-details")!;
 const copyStatus = document.querySelector<HTMLSpanElement>("#copy-status")!;
+const copyError = document.getElementById("copy-error")!;
 
 const mandatoryFields: (keyof typeof inputs)[] = [
   "name",
@@ -305,18 +306,35 @@ revealOrgBtn.addEventListener("click", (e) => {
   view();
 });
 
-copyBtn.addEventListener("click", () => {
-  const html = preview.innerHTML;
-  const blob = new Blob([html], { type: "text/html" });
-  const data = [new ClipboardItem({ "text/html": blob })];
+copyBtn.addEventListener("click", copyToClipboard);
 
-  navigator.clipboard.write(data);
+async function copyToClipboard() {
+  try {
+    if (ClipboardItem.supports("text/html")) {
+      const blob = new Blob([preview.innerHTML], { type: "text/html" });
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          [blob.type]: blob,
+        }),
+      ]);
 
-  copyStatus.style.display = "inline";
-  setTimeout(() => {
-    copyStatus.style.display = "none";
-  }, 2000);
-});
+      copyStatus.style.display = "inline";
+      setTimeout(() => {
+        copyStatus.style.display = "none";
+      }, 2000);
+    } else {
+      copyError.classList.remove("d-none");
+      setTimeout(() => {
+        copyError.classList.add("d-none");
+      }, 5000);
+    }
+  } catch (err) {
+    copyError.classList.remove("d-none");
+    setTimeout(() => {
+      copyError.classList.add("d-none");
+    }, 5000);
+  }
+}
 
 // Init
 view();
