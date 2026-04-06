@@ -187,7 +187,7 @@ ${
 ${
   flickr
     ? `<a href="${flickr}" target="_blank" style="display:inline-block;">
-    <img width="20" height="20" src=${icons.flickr} alt="TikTok" style="vertical-align:middle; border:none;">
+    <img width="20" height="20" src=${icons.flickr} alt="Flickr" style="vertical-align:middle; border:none;">
 </a>`
     : ""
 }
@@ -222,7 +222,7 @@ ${
     }
   });
 
-  if (errorCount == 0) {
+  if (errorCount === 0) {
     preview.innerHTML = DOMPurify.sanitize(signatureHTML);
   } else {
     preview.innerHTML = "Fill in the required fields to see the signature";
