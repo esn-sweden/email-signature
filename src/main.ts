@@ -50,10 +50,7 @@ const resultsContainer = document.getElementById(
   "org-results",
 ) as HTMLDivElement;
 const copyBtn = document.getElementById("copy-btn") as HTMLButtonElement;
-const revealOrgBtn = document.getElementById(
-  "revealOrgInfo",
-) as HTMLButtonElement;
-const details = document.getElementById("orgDetails") as HTMLDivElement;
+
 const copyStatus = document.getElementById("copy-status") as HTMLSpanElement;
 const copyError = document.getElementById("copy-error") as HTMLSpanElement;
 

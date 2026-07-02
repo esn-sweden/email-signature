@@ -100,47 +100,48 @@
                 </div>
               </div>
 
-              <div class="mb-3">
-                <div class="mb-3 position-relative">
-                  <label for="org-search" class="form-label fw-bold"
-                    >Search organisation</label
-                  >
-                  <input
-                    type="text"
-                    id="org-search"
-                    autocomplete="organization"
-                    class="form-control form-control-lg"
-                    placeholder="Start typing the name of your section/NO..."
-                  />
-                  <div
-                    id="org-results"
-                    class="list-group position-absolute w-100 shadow z-3"
-                  ></div>
-                </div>
-                <button
-                  id="revealOrgInfo"
-                  class="btn btn-outline-primary"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#orgDetails"
-                  aria-expanded="false"
-                  aria-controls="orgDetails"
-                >
-                  Edit manually
-                </button>
-              </div>
+              <div class="card mb-4">
+                <div class="card-header">Organisation information</div>
 
-              <div
-                id="error"
-                class="alert alert-danger p-3 mb-3 d-none"
-                role="alert"
-              ></div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <div class="mb-3 position-relative">
+                      <label for="org-search" class="form-label fw-bold"
+                        >Search organisation</label
+                      >
+                      <input
+                        type="text"
+                        id="org-search"
+                        autocomplete="organization"
+                        class="form-control form-control-lg"
+                        placeholder="Start typing the name of your section/NO..."
+                      />
+                      <div
+                        id="org-results"
+                        class="list-group position-absolute w-100 shadow z-3"
+                      ></div>
+                    </div>
+                    <button
+                      id="revealOrgInfo"
+                      class="btn btn-outline-primary"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#orgDetails"
+                      aria-expanded="false"
+                      aria-controls="orgDetails"
+                    >
+                      Edit manually
+                    </button>
 
-              <div id="orgDetails" class="collapse">
-                <div class="card mb-4">
-                  <div class="card-header">Organisation information</div>
+                    <!-- For API errors -->
+                    <div
+                      id="error"
+                      class="alert alert-danger p-3 mb-3 d-none"
+                      role="alert"
+                    ></div>
+                  </div>
 
-                  <div class="card-body">
+                  <div id="orgDetails" class="collapse">
                     <div class="mb-3 form-floating">
                       <input
                         type="text"
@@ -184,118 +185,121 @@
                       />
                       <label for="logo" class="form-label">Logo url</label>
                     </div>
-                  </div>
-                </div>
-                <div class="card mb-4">
-                  <div class="card-header">Social Media (optional)</div>
 
-                  <div class="card-body">
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="facebook"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <label for="facebook" class="form-label">Facebook</label>
-                    </div>
+                    <fieldset>
+                      <legend>Social Media</legend>
 
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="instagram"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <label for="instagram" class="form-label"
-                        >Instagram</label
-                      >
-                    </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="facebook"
+                          class="form-control"
+                          placeholder=""
+                        />
+                        <label for="facebook" class="form-label"
+                          >Facebook</label
+                        >
+                      </div>
 
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="twitter"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <label for="twitter" class="form-label"
-                        >X (Twitter)</label
-                      >
-                    </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="instagram"
+                          class="form-control"
+                          placeholder=""
+                        />
+                        <label for="instagram" class="form-label"
+                          >Instagram</label
+                        >
+                      </div>
 
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="bluesky"
-                        class="form-control"
-                        value=""
-                        placeholder=""
-                      />
-                      <label for="bluesky" class="form-label">Bluesky</label>
-                    </div>
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="youtube"
-                        class="form-control"
-                        value=""
-                        placeholder=""
-                      />
-                      <label for="youtube" class="form-label">YouTube</label>
-                    </div>
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="linkedinOrg"
-                        class="form-control"
-                        value=""
-                        placeholder=""
-                      />
-                      <label for="linkedinOrg" class="form-label"
-                        >LinkedIn</label
-                      >
-                    </div>
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="tiktok"
-                        class="form-control"
-                        value=""
-                        placeholder=""
-                      />
-                      <label for="tiktok" class="form-label">TikTok</label>
-                    </div>
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="flickr"
-                        class="form-control"
-                        value=""
-                        placeholder=""
-                      />
-                      <label for="flickr" class="form-label">Flickr</label>
-                    </div>
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="whatsapp"
-                        class="form-control"
-                        value=""
-                        placeholder=""
-                      />
-                      <label for="whatsapp" class="form-label">WhatsApp</label>
-                    </div>
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="skype"
-                        class="form-control"
-                        value=""
-                        placeholder=""
-                      />
-                      <label for="skype" class="form-label">Skype</label>
-                    </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="twitter"
+                          class="form-control"
+                          placeholder=""
+                        />
+                        <label for="twitter" class="form-label"
+                          >X (Twitter)</label
+                        >
+                      </div>
+
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="bluesky"
+                          class="form-control"
+                          value=""
+                          placeholder=""
+                        />
+                        <label for="bluesky" class="form-label">Bluesky</label>
+                      </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="youtube"
+                          class="form-control"
+                          value=""
+                          placeholder=""
+                        />
+                        <label for="youtube" class="form-label">YouTube</label>
+                      </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="linkedinOrg"
+                          class="form-control"
+                          value=""
+                          placeholder=""
+                        />
+                        <label for="linkedinOrg" class="form-label"
+                          >LinkedIn</label
+                        >
+                      </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="tiktok"
+                          class="form-control"
+                          value=""
+                          placeholder=""
+                        />
+                        <label for="tiktok" class="form-label">TikTok</label>
+                      </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="flickr"
+                          class="form-control"
+                          value=""
+                          placeholder=""
+                        />
+                        <label for="flickr" class="form-label">Flickr</label>
+                      </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="whatsapp"
+                          class="form-control"
+                          value=""
+                          placeholder=""
+                        />
+                        <label for="whatsapp" class="form-label"
+                          >WhatsApp</label
+                        >
+                      </div>
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="skype"
+                          class="form-control"
+                          value=""
+                          placeholder=""
+                        />
+                        <label for="skype" class="form-label">Skype</label>
+                      </div>
+                    </fieldset>
                   </div>
                 </div>
               </div>
