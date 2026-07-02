@@ -8,7 +8,7 @@ Based on specifications in [ESN Signature Template & Tutorial](https://docs.goog
 
 All data is taken from ESN Accounts, please update your information there and it will be reflected in the signature generator.
 
-> ![NOTE]
+> [!NOTE]
 > The "Organisation name" part of the address is not visible in the ESN Accounts API. If you need to include that, put that on the first or second address line instead.
 
 If you would like to add any social media which are not available in ESN Accounts, you can make a pull request to `src/extra-social-media.yaml`. Use the section **code** as the key. You may also contact the maintainer for assistance.
