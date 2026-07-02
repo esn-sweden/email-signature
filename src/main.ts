@@ -7,6 +7,7 @@ import DOMPurify from "dompurify";
 interface Model {
   searchResults: ESNOrg[];
   showOrgDetails: boolean;
+  showPronouns: boolean;
   ESNOrgs: ESNOrg[];
   apiError: string;
 }
@@ -14,6 +15,7 @@ interface Model {
 let model: Model = {
   searchResults: [],
   showOrgDetails: false,
+  showPronouns: false,
   ESNOrgs: [],
   apiError: "",
 };
@@ -21,6 +23,7 @@ let model: Model = {
 const inputs = {
   name: document.getElementById("name") as HTMLInputElement,
   title: document.getElementById("title") as HTMLInputElement,
+  pronouns: document.getElementById("pronounsField") as HTMLInputElement,
   email: document.getElementById("email") as HTMLInputElement,
   phone: document.getElementById("phone") as HTMLInputElement,
   linkedinPers: document.getElementById("linkedinPers") as HTMLInputElement,
@@ -39,6 +42,9 @@ const inputs = {
   whatsapp: document.getElementById("whatsapp") as HTMLInputElement,
   skype: document.getElementById("skype") as HTMLInputElement,
 };
+const togglePronouns = document.getElementById(
+  "togglePronouns",
+) as HTMLInputElement;
 const preview = document.getElementById("preview") as HTMLDivElement;
 const searchInput = document.getElementById("org-search") as HTMLInputElement;
 const resultsContainer = document.getElementById(
@@ -89,6 +95,8 @@ function view() {
     el?.classList.add("d-none");
   }
 
+  const pronouns = model.showPronouns ? inputs.pronouns.value : "";
+
   const name = inputs.name.value;
   const title = inputs.title.value;
   const email = inputs.email.value;
@@ -116,7 +124,7 @@ function view() {
 
   const signatureHTML = `
 <div style="font-family:Arial, sans-serif; font-size:10pt; color:#000000; line-height:1.4;">
-<b>${name}</b><br>
+<b>${name}</b>${pronouns ? ` <i>(${pronouns}</i>)` : ""}<br>
 <i>${title}</i><br>
 <a href="mailto:${email}" style="color:#1155cc" target="_blank">${email}</a><br>
 ${phone ? `${phone}<br>` : ""}
@@ -258,6 +266,12 @@ function populateOrgInfo(org: ESNOrg) {
 }
 
 // --------------------- Event listeners --------------------------------
+
+togglePronouns.addEventListener("change", () => {
+  model.showPronouns = togglePronouns.checked;
+  inputs.pronouns.disabled = !togglePronouns.checked;
+  view();
+});
 
 // Typing in the search bar
 searchInput.addEventListener("input", () => {
