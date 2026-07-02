@@ -298,9 +298,7 @@ resultsContainer.addEventListener("click", async (e) => {
   const fullData = model.ESNOrgs.find((s) => s.code === code);
 
   if (!fullData) return;
-
   populateOrgInfo(fullData);
-  model.showOrgDetails = true;
   searchInput.value = fullData.label;
   model.searchResults = [];
   view();
