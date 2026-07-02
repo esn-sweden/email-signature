@@ -1,5 +1,6 @@
 import sectionsExtra from "./sections.yaml";
 import countriesExtra from "./countries.yaml";
+import esnIntData from "./esn-international.yaml";
 
 interface ESNOrgApi {
   label: string;
@@ -116,26 +117,25 @@ export async function loadActiveOrgs(): Promise<ESNOrg[]> {
     loadSections(),
   ]);
 
+  const esnInternational = esnIntData["ESN-INT"];
+
   const activeOrgs = countries
     .concat(sections)
     .filter((org) => org.state === "active")
-    .sort((a, b) => a.code.localeCompare(b.code));
+    .sort((a, b) => a.code.localeCompare(b.code))
+    .concat(esnInternational); // put ESN International at the end of the list
 
   return activeOrgs.map((org) => {
+    if (org.code === "ESN-INT") {
+      return { ...esnInternational };
+    }
     const ext = extensions[org.code] ?? {};
 
     return {
-      label: org.label,
-      code: org.code,
-      website: org.website,
+      ...org,
       address: getAddress(org),
-      facebook: org.facebook,
-      instagram: org.instagram,
       x: org.twitter,
-      logo: org.logo,
-
-      // Extra data from yaml
-      ...ext,
+      ...ext, // Extra data from yaml
     };
   });
 }
