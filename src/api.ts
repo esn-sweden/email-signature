@@ -1,6 +1,5 @@
-import sectionsExtra from "./sections.yaml";
-import countriesExtra from "./countries.yaml";
-import esnIntData from "./esn-international.yaml";
+import socialMediaYaml from "./extra-social-media.yaml";
+import OrgsYaml from "./extra-orgs.yaml";
 
 interface ESNOrgApi {
   label: string;
@@ -60,7 +59,7 @@ export interface ESNOrg {
   skype?: string;
 }
 
-interface YamlExtension {
+interface ExtraSocialMedia {
   [code: string]: {
     bluesky?: string;
     youtube?: string;
@@ -72,13 +71,9 @@ interface YamlExtension {
   };
 }
 
-const countriesExtension: YamlExtension = countriesExtra;
-const sectionsExtension: YamlExtension = sectionsExtra;
+const extraSocialMedia: ExtraSocialMedia = { ...socialMediaYaml };
 
-const extensions: YamlExtension = {
-  ...countriesExtension,
-  ...sectionsExtension,
-};
+const extraOrgs: ESNOrg[] = OrgsYaml;
 
 function getAddress(section: ESNOrgApi): string {
   const adr = section.address;
@@ -117,19 +112,13 @@ export async function loadActiveOrgs(): Promise<ESNOrg[]> {
     loadSections(),
   ]);
 
-  const esnInternational = esnIntData["ESN-INT"];
-
   const activeOrgs = countries
     .concat(sections)
     .filter((org) => org.state === "active")
-    .sort((a, b) => a.code.localeCompare(b.code))
-    .concat(esnInternational); // put ESN International at the end of the list
+    .sort((a, b) => a.code.localeCompare(b.code));
 
-  return activeOrgs.map((org) => {
-    if (org.code === "ESN-INT") {
-      return { ...esnInternational };
-    }
-    const ext = extensions[org.code] ?? {};
+  const esnOrgs = activeOrgs.map((org) => {
+    const ext = extraSocialMedia[org.code] ?? {};
 
     return {
       ...org,
@@ -138,4 +127,6 @@ export async function loadActiveOrgs(): Promise<ESNOrg[]> {
       ...ext, // Extra data from yaml
     };
   });
+
+  return [...esnOrgs, ...extraOrgs];
 }
