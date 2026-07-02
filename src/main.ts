@@ -124,7 +124,7 @@ function view() {
 
   const signatureHTML = `
 <div style="font-family:Arial, sans-serif; font-size:10pt; color:#000000; line-height:1.4;">
-<b>${name}</b>${pronouns ? ` <i>(${pronouns}</i>)` : ""}<br>
+<b>${name}</b>${pronouns ? ` <i>(${pronouns})</i>` : ""}<br>
 <i>${title}</i><br>
 <a href="mailto:${email}" style="color:#1155cc" target="_blank">${email}</a><br>
 ${phone ? `${phone}<br>` : ""}
