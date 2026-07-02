@@ -1,4 +1,5 @@
 import "./styles.scss";
+import * as bootstrap from "bootstrap";
 import { loadActiveOrgs } from "./api";
 import type { ESNOrg } from "../src/types/esn-org";
 import { icons } from "./icons";
@@ -6,7 +7,6 @@ import DOMPurify from "dompurify";
 
 interface Model {
   searchResults: ESNOrg[];
-  showOrgDetails: boolean;
   showPronouns: boolean;
   ESNOrgs: ESNOrg[];
   apiError: string;
@@ -14,7 +14,6 @@ interface Model {
 
 let model: Model = {
   searchResults: [],
-  showOrgDetails: false,
   showPronouns: false,
   ESNOrgs: [],
   apiError: "",
@@ -54,7 +53,7 @@ const copyBtn = document.getElementById("copy-btn") as HTMLButtonElement;
 const revealOrgBtn = document.getElementById(
   "revealOrgInfo",
 ) as HTMLButtonElement;
-const details = document.getElementById("org-details") as HTMLDivElement;
+const details = document.getElementById("orgDetails") as HTMLDivElement;
 const copyStatus = document.getElementById("copy-status") as HTMLSpanElement;
 const copyError = document.getElementById("copy-error") as HTMLSpanElement;
 
@@ -68,11 +67,6 @@ const mandatoryFields: (keyof typeof inputs)[] = [
 ];
 
 function view() {
-  if (model.showOrgDetails) {
-    details.classList.remove("d-none");
-    revealOrgBtn.classList.add("d-none");
-  }
-
   if (model.searchResults.length > 0) {
     resultsContainer.innerHTML = model.searchResults
       .map(
@@ -320,12 +314,6 @@ searchInput.addEventListener("keydown", (e) => {
 // Update preview as user types
 Object.values(inputs).forEach((input) => {
   input.addEventListener("input", view);
-});
-
-revealOrgBtn.addEventListener("click", (e) => {
-  e.preventDefault(); // prevent form submission
-  model.showOrgDetails = true;
-  view();
 });
 
 copyBtn.addEventListener("click", copyToClipboard);
