@@ -22,78 +22,80 @@
                 <div class="card-header">Personal information</div>
 
                 <div class="card-body">
-                  <div class="mb-3">
-                    <label for="name" class="form-label">Full Name</label>
+                  <div class="mb-3 form-floating">
                     <input
                       type="text"
                       id="name"
                       autocomplete="name"
                       class="form-control"
+                      placeholder=""
                     />
+                    <label for="name" class="form-label">Full Name</label>
                   </div>
 
-                  <div class="row">
-                    <div class="col">
+                  <label class="form-check-label mb-2" for="togglePronouns"
+                    >Add pronouns (optional)</label
+                  >
+                  <div class="input-group mb-3">
+                    <div class="input-group-text">
                       <input
                         class="form-check-input"
                         type="checkbox"
                         id="togglePronouns"
                       />
-                      <label class="form-check-label" for="togglePronouns"
-                        >Add pronouns (optional)</label
-                      >
                     </div>
-                    <div class="col">
-                      <label class="form-label" for="pronouns">Pronouns</label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        id="pronounsField"
-                        disabled
-                      />
-                    </div>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="pronounsField"
+                      disabled
+                    />
                   </div>
 
-                  <div class="mb-3">
-                    <label for="title" class="form-label">Position</label>
+                  <div class="mb-3 form-floating">
                     <input
                       type="text"
                       id="title"
                       autocomplete="organization-title"
                       class="form-control"
+                      placeholder=""
                     />
+                    <label for="title" class="form-label">Position</label>
                   </div>
-                  <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
+                  <div class="mb-3 form-floating">
                     <input
                       type="email"
                       id="email"
                       autocomplete="work email"
                       class="form-control"
+                      placeholder=""
                     />
+                    <label for="email" class="form-label">Email</label>
                   </div>
-                  <div class="mb-3">
-                    <label for="phone" class="form-label"
-                      >Phone (optional)</label
-                    >
+                  <div class="mb-3 form-floating">
                     <input
                       type="tel"
                       id="phone"
                       autocomplete="work tel"
                       class="form-control"
+                      placeholder=""
                     />
+                    <label for="phone" class="form-label"
+                      >Phone (optional)</label
+                    >
                   </div>
 
-                  <div class="mb-3">
-                    <label for="linkedinPers" class="form-label"
-                      >LinkedIn (optional)</label
-                    >
+                  <div class="mb-3 form-floating">
                     <input
                       type="text"
                       id="linkedinPers"
                       autocomplete="url"
                       class="form-control"
+                      placeholder=""
                     />
+                    <label for="linkedinPers" class="form-label"
+                      >LinkedIn (optional)</label
+                    >
                   </div>
                 </div>
               </div>
@@ -129,31 +131,47 @@
                   <div class="card-header">Organisation information</div>
 
                   <div class="card-body">
-                    <div class="mb-3">
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="text"
+                        id="orgName"
+                        class="form-control"
+                        placeholder=""
+                      />
                       <label for="orgName" class="form-label"
                         >Name of ESN section/country</label
                       >
-                      <input type="text" id="orgName" class="form-control" />
                     </div>
 
-                    <div class="mb-3">
-                      <label for="address" class="form-label">Address</label>
+                    <div class="mb-3 form-floating">
                       <textarea
                         name="address"
                         id="address"
                         class="form-control"
                         rows="4"
+                        placeholder=""
                       ></textarea>
+                      <label for="address" class="form-label">Address</label>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="text"
+                        id="website"
+                        class="form-control"
+                        placeholder=""
+                      />
                       <label for="website" class="form-label">Website</label>
-                      <input type="text" id="website" class="form-control" />
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="text"
+                        id="logo"
+                        class="form-control"
+                        placeholder=""
+                      />
                       <label for="logo" class="form-label">Logo url</label>
-                      <input type="text" id="logo" class="form-control" />
                     </div>
                   </div>
                 </div>
@@ -161,87 +179,111 @@
                   <div class="card-header">Social Media (optional)</div>
 
                   <div class="card-body">
-                    <div class="mb-3">
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="text"
+                        id="facebook"
+                        class="form-control"
+                        placeholder=""
+                      />
                       <label for="facebook" class="form-label">Facebook</label>
-                      <input type="text" id="facebook" class="form-control" />
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="text"
+                        id="instagram"
+                        class="form-control"
+                        placeholder=""
+                      />
                       <label for="instagram" class="form-label"
                         >Instagram</label
                       >
-                      <input type="text" id="instagram" class="form-control" />
                     </div>
 
-                    <div class="mb-3">
-                      <label for="twitter" class="form-label">X</label>
-                      <input type="text" id="twitter" class="form-control" />
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="text"
+                        id="twitter"
+                        class="form-control"
+                        placeholder=""
+                      />
+                      <label for="twitter" class="form-label"
+                        >X (Twitter)</label
+                      >
                     </div>
 
-                    <div class="mb-3">
-                      <label for="bluesky" class="form-label">Bluesky</label>
+                    <div class="mb-3 form-floating">
                       <input
                         type="text"
                         id="bluesky"
                         class="form-control"
                         value=""
+                        placeholder=""
                       />
+                      <label for="bluesky" class="form-label">Bluesky</label>
                     </div>
-                    <div class="mb-3">
-                      <label for="youtube" class="form-label">YouTube</label>
+                    <div class="mb-3 form-floating">
                       <input
                         type="text"
                         id="youtube"
                         class="form-control"
                         value=""
+                        placeholder=""
                       />
+                      <label for="youtube" class="form-label">YouTube</label>
                     </div>
-                    <div class="mb-3">
-                      <label for="linkedinOrg" class="form-label"
-                        >LinkedIn</label
-                      >
+                    <div class="mb-3 form-floating">
                       <input
                         type="text"
                         id="linkedinOrg"
                         class="form-control"
                         value=""
+                        placeholder=""
                       />
+                      <label for="linkedinOrg" class="form-label"
+                        >LinkedIn</label
+                      >
                     </div>
-                    <div class="mb-3">
-                      <label for="tiktok" class="form-label">TikTok</label>
+                    <div class="mb-3 form-floating">
                       <input
                         type="text"
                         id="tiktok"
                         class="form-control"
                         value=""
+                        placeholder=""
                       />
+                      <label for="tiktok" class="form-label">TikTok</label>
                     </div>
-                    <div class="mb-3">
-                      <label for="flickr" class="form-label">Flickr</label>
+                    <div class="mb-3 form-floating">
                       <input
                         type="text"
                         id="flickr"
                         class="form-control"
                         value=""
+                        placeholder=""
                       />
+                      <label for="flickr" class="form-label">Flickr</label>
                     </div>
-                    <div class="mb-3">
-                      <label for="whatsapp" class="form-label">WhatsApp</label>
+                    <div class="mb-3 form-floating">
                       <input
                         type="text"
                         id="whatsapp"
                         class="form-control"
                         value=""
+                        placeholder=""
                       />
+                      <label for="whatsapp" class="form-label">WhatsApp</label>
                     </div>
-                    <div class="mb-3">
-                      <label for="skype" class="form-label">Skype</label>
+                    <div class="mb-3 form-floating">
                       <input
                         type="text"
                         id="skype"
                         class="form-control"
                         value=""
+                        placeholder=""
                       />
+                      <label for="skype" class="form-label">Skype</label>
                     </div>
                   </div>
                 </div>
