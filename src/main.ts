@@ -246,6 +246,15 @@ function populateOrgInfo(org: ESNOrg) {
   inputs.facebook.value = org.facebook;
   inputs.instagram.value = org.instagram;
   inputs.x.value = org.x;
+
+  // currently not supported in ESN Accounts, populated from yaml in repo
+  inputs.bluesky.value = org.bluesky ?? "";
+  inputs.youtube.value = org.youtube ?? "";
+  inputs.linkedinOrg.value = org.linkedinOrg ?? "";
+  inputs.tiktok.value = org.tiktok ?? "";
+  inputs.flickr.value = org.flickr ?? "";
+  inputs.whatsapp.value = org.whatsapp ?? "";
+  inputs.skype.value = org.skype ?? "";
 }
 
 // --------------------- Event listeners --------------------------------
