@@ -1,6 +1,6 @@
 import "./styles.scss";
 import { loadActiveOrgs } from "./api";
-import type { ESNOrg } from "./api";
+import type { ESNOrg } from "../src/types/esn-org";
 import { icons } from "./icons";
 import DOMPurify from "dompurify";
 
