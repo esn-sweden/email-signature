@@ -12,358 +12,370 @@
   </head>
 
   <body>
-    <main>
-      <h1 class="py-5 text-center">ESN Email Signature Generator</h1>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <form id="signatureForm">
-              <div class="card mb-4">
-                <div class="card-header">Personal information</div>
+    <div
+      id="loading"
+      style="display: flex; justify-content: center; align-items: center"
+    >
+      <p>Loading...</p>
+    </div>
+    <div id="app" style="visibility: hidden">
+      <main>
+        <h1 class="py-5 text-center">ESN Email Signature Generator</h1>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <form id="signatureForm">
+                <div class="card mb-4">
+                  <div class="card-header">Personal information</div>
 
-                <div class="card-body">
-                  <div class="mb-3 form-floating">
-                    <input
-                      type="text"
-                      id="name"
-                      autocomplete="name"
-                      class="form-control"
-                      placeholder=""
-                    />
-                    <label for="name" class="form-label">Full Name</label>
-                  </div>
-
-                  <label class="form-check-label mb-2" for="togglePronouns"
-                    >Add pronouns (optional)</label
-                  >
-                  <div class="input-group mb-3">
-                    <div class="input-group-text">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="togglePronouns"
-                      />
-                    </div>
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="pronounsField"
-                      disabled
-                    />
-                  </div>
-
-                  <div class="mb-3 form-floating">
-                    <input
-                      type="text"
-                      id="title"
-                      autocomplete="organization-title"
-                      class="form-control"
-                      placeholder=""
-                    />
-                    <label for="title" class="form-label">Position</label>
-                  </div>
-                  <div class="mb-3 form-floating">
-                    <input
-                      type="email"
-                      id="email"
-                      autocomplete="work email"
-                      class="form-control"
-                      placeholder=""
-                    />
-                    <label for="email" class="form-label">Email</label>
-                  </div>
-                  <div class="mb-3 form-floating">
-                    <input
-                      type="tel"
-                      id="phone"
-                      autocomplete="work tel"
-                      class="form-control"
-                      placeholder=""
-                    />
-                    <label for="phone" class="form-label"
-                      >Phone (optional)</label
-                    >
-                  </div>
-
-                  <div class="mb-3 form-floating">
-                    <input
-                      type="text"
-                      id="linkedinPers"
-                      autocomplete="url"
-                      class="form-control"
-                      placeholder=""
-                    />
-                    <label for="linkedinPers" class="form-label"
-                      >LinkedIn (optional)</label
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="card mb-4">
-                <div class="card-header">Organisation information</div>
-
-                <div class="card-body">
-                  <div class="mb-3">
-                    <div class="mb-3 position-relative">
-                      <label for="org-search" class="form-label fw-bold"
-                        >Search organisation</label
-                      >
+                  <div class="card-body">
+                    <div class="mb-3 form-floating">
                       <input
                         type="text"
-                        id="org-search"
-                        autocomplete="organization"
+                        id="name"
+                        autocomplete="name"
                         class="form-control"
-                        placeholder="Type to search..."
+                        placeholder=""
                       />
+                      <label for="name" class="form-label">Full Name</label>
+                    </div>
+
+                    <label class="form-check-label mb-2" for="togglePronouns"
+                      >Add pronouns (optional)</label
+                    >
+                    <div class="input-group mb-3">
+                      <div class="input-group-text">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="togglePronouns"
+                        />
+                      </div>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="pronounsField"
+                        disabled
+                      />
+                    </div>
+
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="text"
+                        id="title"
+                        autocomplete="organization-title"
+                        class="form-control"
+                        placeholder=""
+                      />
+                      <label for="title" class="form-label">Position</label>
+                    </div>
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="email"
+                        id="email"
+                        autocomplete="work email"
+                        class="form-control"
+                        placeholder=""
+                      />
+                      <label for="email" class="form-label">Email</label>
+                    </div>
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="tel"
+                        id="phone"
+                        autocomplete="work tel"
+                        class="form-control"
+                        placeholder=""
+                      />
+                      <label for="phone" class="form-label"
+                        >Phone (optional)</label
+                      >
+                    </div>
+
+                    <div class="mb-3 form-floating">
+                      <input
+                        type="text"
+                        id="linkedinPers"
+                        autocomplete="url"
+                        class="form-control"
+                        placeholder=""
+                      />
+                      <label for="linkedinPers" class="form-label"
+                        >LinkedIn (optional)</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card mb-4">
+                  <div class="card-header">Organisation information</div>
+
+                  <div class="card-body">
+                    <div class="mb-3">
+                      <div class="mb-3 position-relative">
+                        <label for="org-search" class="form-label fw-bold"
+                          >Search organisation</label
+                        >
+                        <input
+                          type="text"
+                          id="org-search"
+                          autocomplete="organization"
+                          class="form-control"
+                          placeholder="Type to search..."
+                        />
+                        <div
+                          id="org-results"
+                          class="list-group position-absolute w-100 shadow z-3"
+                        ></div>
+                      </div>
+                      <!-- For API errors -->
                       <div
-                        id="org-results"
-                        class="list-group position-absolute w-100 shadow z-3"
+                        id="error"
+                        class="alert alert-danger p-3 mb-3 d-none"
+                        role="alert"
                       ></div>
-                    </div>
-                    <!-- For API errors -->
-                    <div
-                      id="error"
-                      class="alert alert-danger p-3 mb-3 d-none"
-                      role="alert"
-                    ></div>
-                    <button
-                      id="revealOrgInfo"
-                      class="btn btn-outline-primary"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#orgDetails"
-                      aria-expanded="false"
-                      aria-controls="orgDetails"
-                    >
-                      Edit manually
-                    </button>
-                  </div>
-
-                  <div id="orgDetails" class="collapse">
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="orgName"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <label for="orgName" class="form-label"
-                        >Name of ESN section/country</label
+                      <button
+                        id="revealOrgInfo"
+                        class="btn btn-outline-primary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#orgDetails"
+                        aria-expanded="false"
+                        aria-controls="orgDetails"
                       >
+                        Edit manually
+                      </button>
                     </div>
 
-                    <div class="mb-3 form-floating">
-                      <textarea
-                        name="address"
-                        id="address"
-                        class="form-control"
-                        rows="4"
-                        style="height: 100px"
-                        placeholder=""
-                      ></textarea>
-                      <label for="address" class="form-label">Address</label>
+                    <div id="orgDetails" class="collapse">
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="orgName"
+                          class="form-control"
+                          placeholder=""
+                        />
+                        <label for="orgName" class="form-label"
+                          >Name of ESN section/country</label
+                        >
+                      </div>
+
+                      <div class="mb-3 form-floating">
+                        <textarea
+                          name="address"
+                          id="address"
+                          class="form-control"
+                          rows="4"
+                          style="height: 100px"
+                          placeholder=""
+                        ></textarea>
+                        <label for="address" class="form-label">Address</label>
+                      </div>
+
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="website"
+                          class="form-control"
+                          placeholder=""
+                        />
+                        <label for="website" class="form-label">Website</label>
+                      </div>
+
+                      <div class="mb-3 form-floating">
+                        <input
+                          type="text"
+                          id="logo"
+                          class="form-control"
+                          placeholder=""
+                        />
+                        <label for="logo" class="form-label">Logo url</label>
+                      </div>
+
+                      <fieldset>
+                        <legend>Social Media</legend>
+
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="facebook"
+                            class="form-control"
+                            placeholder=""
+                          />
+                          <label for="facebook" class="form-label"
+                            >Facebook</label
+                          >
+                        </div>
+
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="instagram"
+                            class="form-control"
+                            placeholder=""
+                          />
+                          <label for="instagram" class="form-label"
+                            >Instagram</label
+                          >
+                        </div>
+
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="twitter"
+                            class="form-control"
+                            placeholder=""
+                          />
+                          <label for="twitter" class="form-label"
+                            >X (Twitter)</label
+                          >
+                        </div>
+
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="bluesky"
+                            class="form-control"
+                            value=""
+                            placeholder=""
+                          />
+                          <label for="bluesky" class="form-label"
+                            >Bluesky</label
+                          >
+                        </div>
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="youtube"
+                            class="form-control"
+                            value=""
+                            placeholder=""
+                          />
+                          <label for="youtube" class="form-label"
+                            >YouTube</label
+                          >
+                        </div>
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="linkedinOrg"
+                            class="form-control"
+                            value=""
+                            placeholder=""
+                          />
+                          <label for="linkedinOrg" class="form-label"
+                            >LinkedIn</label
+                          >
+                        </div>
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="tiktok"
+                            class="form-control"
+                            value=""
+                            placeholder=""
+                          />
+                          <label for="tiktok" class="form-label">TikTok</label>
+                        </div>
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="flickr"
+                            class="form-control"
+                            value=""
+                            placeholder=""
+                          />
+                          <label for="flickr" class="form-label">Flickr</label>
+                        </div>
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="whatsapp"
+                            class="form-control"
+                            value=""
+                            placeholder=""
+                          />
+                          <label for="whatsapp" class="form-label"
+                            >WhatsApp</label
+                          >
+                        </div>
+                        <div class="mb-3 form-floating">
+                          <input
+                            type="text"
+                            id="skype"
+                            class="form-control"
+                            value=""
+                            placeholder=""
+                          />
+                          <label for="skype" class="form-label">Skype</label>
+                        </div>
+                      </fieldset>
                     </div>
-
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="website"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <label for="website" class="form-label">Website</label>
-                    </div>
-
-                    <div class="mb-3 form-floating">
-                      <input
-                        type="text"
-                        id="logo"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <label for="logo" class="form-label">Logo url</label>
-                    </div>
-
-                    <fieldset>
-                      <legend>Social Media</legend>
-
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="facebook"
-                          class="form-control"
-                          placeholder=""
-                        />
-                        <label for="facebook" class="form-label"
-                          >Facebook</label
-                        >
-                      </div>
-
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="instagram"
-                          class="form-control"
-                          placeholder=""
-                        />
-                        <label for="instagram" class="form-label"
-                          >Instagram</label
-                        >
-                      </div>
-
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="twitter"
-                          class="form-control"
-                          placeholder=""
-                        />
-                        <label for="twitter" class="form-label"
-                          >X (Twitter)</label
-                        >
-                      </div>
-
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="bluesky"
-                          class="form-control"
-                          value=""
-                          placeholder=""
-                        />
-                        <label for="bluesky" class="form-label">Bluesky</label>
-                      </div>
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="youtube"
-                          class="form-control"
-                          value=""
-                          placeholder=""
-                        />
-                        <label for="youtube" class="form-label">YouTube</label>
-                      </div>
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="linkedinOrg"
-                          class="form-control"
-                          value=""
-                          placeholder=""
-                        />
-                        <label for="linkedinOrg" class="form-label"
-                          >LinkedIn</label
-                        >
-                      </div>
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="tiktok"
-                          class="form-control"
-                          value=""
-                          placeholder=""
-                        />
-                        <label for="tiktok" class="form-label">TikTok</label>
-                      </div>
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="flickr"
-                          class="form-control"
-                          value=""
-                          placeholder=""
-                        />
-                        <label for="flickr" class="form-label">Flickr</label>
-                      </div>
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="whatsapp"
-                          class="form-control"
-                          value=""
-                          placeholder=""
-                        />
-                        <label for="whatsapp" class="form-label"
-                          >WhatsApp</label
-                        >
-                      </div>
-                      <div class="mb-3 form-floating">
-                        <input
-                          type="text"
-                          id="skype"
-                          class="form-control"
-                          value=""
-                          placeholder=""
-                        />
-                        <label for="skype" class="form-label">Skype</label>
-                      </div>
-                    </fieldset>
                   </div>
                 </div>
-              </div>
-            </form>
-          </div>
+              </form>
+            </div>
 
-          <div class="col-md-6">
-            <section>
-              <h2>Preview</h2>
-              <div
-                id="preview"
-                class="border border-3 border-primary rounded p-3 mb-3"
-              ></div>
-              <button id="copy-btn" class="btn btn-primary">
-                Copy signature
-              </button>
-              <span id="copy-status" style="display: none; margin-left: 8px">
-                Copied!
-              </span>
-              <div
-                id="copy-error"
-                class="alert alert-danger p-3 my-3 d-none"
-                role="alert"
-              >
-                Your browser doesn't support automatic copying, please copy by
-                manually selecting.
-              </div>
-            </section>
+            <div class="col-md-6">
+              <section>
+                <h2>Preview</h2>
+                <div
+                  id="preview"
+                  class="border border-3 border-primary rounded p-3 mb-3"
+                ></div>
+                <button id="copy-btn" class="btn btn-primary">
+                  Copy signature
+                </button>
+                <span id="copy-status" style="display: none; margin-left: 8px">
+                  Copied!
+                </span>
+                <div
+                  id="copy-error"
+                  class="alert alert-danger p-3 my-3 d-none"
+                  role="alert"
+                >
+                  Your browser doesn't support automatic copying, please copy by
+                  manually selecting.
+                </div>
+              </section>
 
-            <section class="py-3">
-              <h2>Instructions</h2>
-              <ol>
-                <li>
-                  Open
-                  <a href="https://mail.google.com/mail/u/0/#settings/general"
-                    >Gmail Settings</a
-                  >
-                  > All Settings and scroll down to <i>Signature</i>.
-                </li>
-                <li>
-                  Select <i>Create new</i> and name it what you want. Then copy
-                  the signature above and paste it into the box.
-                </li>
-                <li>
-                  Under <i>Signature defaults</i> select your newly created
-                  signature for both options.
-                </li>
-                <li>Scroll down to the bottom and save changes.</li>
-              </ol>
-            </section>
+              <section class="py-3">
+                <h2>Instructions</h2>
+                <ol>
+                  <li>
+                    Open
+                    <a href="https://mail.google.com/mail/u/0/#settings/general"
+                      >Gmail Settings</a
+                    >
+                    > All Settings and scroll down to <i>Signature</i>.
+                  </li>
+                  <li>
+                    Select <i>Create new</i> and name it what you want. Then
+                    copy the signature above and paste it into the box.
+                  </li>
+                  <li>
+                    Under <i>Signature defaults</i> select your newly created
+                    signature for both options.
+                  </li>
+                  <li>Scroll down to the bottom and save changes.</li>
+                </ol>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-    <footer class="text-center py-3 mt-4 border-top small">
-      <span>Made with ❤️ in Sweden 🇸🇪 by Elias Jollivet</span>
-      ·
-      <a
-        href="https://github.com/esn-sweden/email-signature"
-        target="_blank"
-        class="text-decoration-none"
-      >
-        Request custom defaults for your section
-      </a>
-    </footer>
+      </main>
+      <footer class="text-center py-3 mt-4 border-top small">
+        <span>Made with ❤️ in Sweden 🇸🇪 by Elias Jollivet</span>
+        ·
+        <a
+          href="https://github.com/esn-sweden/email-signature"
+          target="_blank"
+          class="text-decoration-none"
+        >
+          Request custom defaults for your section
+        </a>
+      </footer>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

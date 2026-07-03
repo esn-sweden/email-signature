@@ -258,6 +258,11 @@ function populateOrgInfo(org: ESNOrg) {
 
 // --------------------- Event listeners --------------------------------
 
+window.addEventListener("load", () => {
+  document.getElementById("loading")!.style.visibility = "hidden";
+  document.getElementById("app")!.style.visibility = "visible";
+});
+
 togglePronouns.addEventListener("change", () => {
   model.showPronouns = togglePronouns.checked;
   inputs.pronouns.disabled = !togglePronouns.checked;
