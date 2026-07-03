@@ -113,14 +113,20 @@
                         type="text"
                         id="org-search"
                         autocomplete="organization"
-                        class="form-control form-control-lg"
-                        placeholder="Start typing the name of your section/NO..."
+                        class="form-control"
+                        placeholder="Type to search..."
                       />
                       <div
                         id="org-results"
                         class="list-group position-absolute w-100 shadow z-3"
                       ></div>
                     </div>
+                    <!-- For API errors -->
+                    <div
+                      id="error"
+                      class="alert alert-danger p-3 mb-3 d-none"
+                      role="alert"
+                    ></div>
                     <button
                       id="revealOrgInfo"
                       class="btn btn-outline-primary"
@@ -132,13 +138,6 @@
                     >
                       Edit manually
                     </button>
-
-                    <!-- For API errors -->
-                    <div
-                      id="error"
-                      class="alert alert-danger p-3 mb-3 d-none"
-                      role="alert"
-                    ></div>
                   </div>
 
                   <div id="orgDetails" class="collapse">
