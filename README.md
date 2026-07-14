@@ -36,6 +36,3 @@ npm run dev
 ````sh
 npm run build
 ````
-
-> [!NOTE]
-> Using pinned Sass at 1.78 to avoid very long deprecation warnings with Bootstrap. See [issue](https://github.com/twbs/bootstrap/issues/40962).
