@@ -1,5 +1,5 @@
 import "./styles.scss";
-import * as bootstrap from "bootstrap";
+import "bootstrap";
 import { loadActiveOrgs } from "./api";
 import type { ESNOrg } from "../src/types/esn-org";
 import { icons } from "./icons";
