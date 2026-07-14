@@ -11,8 +11,8 @@
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.11",
-    "sass": "1.78",
-    "typescript": "~6.0.2",
+    "sass": "^1.78",
+    "typescript": "~7.0.2",
     "vite": "^8.0.5",
     "vitest": "^4.1.9"
   },
