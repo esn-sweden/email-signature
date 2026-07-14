@@ -1,5 +1,6 @@
 import "./styles.scss";
 import "bootstrap";
+import "./api";
 import { loadActiveOrgs } from "./api";
 import type { ESNOrg } from "../src/types/esn-org";
 import icons from "./data/icons.json";
@@ -258,7 +259,7 @@ function populateOrgInfo(org: ESNOrg) {
 
 // --------------------- Event listeners --------------------------------
 
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loading")!.style.visibility = "hidden";
   document.getElementById("app")!.style.visibility = "visible";
 });
