@@ -2,7 +2,7 @@ import "./styles.scss";
 import "bootstrap";
 import { loadActiveOrgs } from "./api";
 import type { ESNOrg } from "../src/types/esn-org";
-import { icons } from "./icons";
+import icons from "./data/icons.json";
 import DOMPurify from "dompurify";
 
 interface Model {

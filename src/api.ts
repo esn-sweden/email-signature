@@ -1,5 +1,5 @@
-import socialMediaYaml from "./extra-social-media.yaml";
-import OrgsYaml from "./extra-orgs.yaml";
+import socialMediaYaml from "./data/extra-social-media.yaml";
+import OrgsYaml from "./data/extra-orgs.yaml";
 import type { ESNOrg, ExtraSocialMedia } from "./types/esn-org";
 import type { ESNOrgApi } from "./types/esn-api";
 
