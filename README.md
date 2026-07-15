@@ -11,11 +11,11 @@ All data is taken from ESN Accounts, please update your information there and it
 > [!NOTE]
 > The "Organisation name" part of the address is not visible in the ESN Accounts API. If you need to include that, put that on the first or second address line instead.
 
-If you would like to add any social media which are not available in ESN Accounts, you can make a pull request to `src/extra-social-media.yaml`. Use the section **code** as the key. You may also contact the maintainer for assistance.
+If you would like to add any social media which are not available in ESN Accounts, you can make a pull request to `src/data/extra-social-media.yaml`. Use the section **code** as the key. You may also contact the maintainer for assistance.
 
 ## Adding a new organisation
 
-If you have an organisation which is related to ESN and want to use the same signature template, you are welcome to make a pull request to `src/extra-orgs.yaml`. 
+If you have an organisation which is related to ESN and want to use the same signature template, you are welcome to make a pull request to `src/data/extra-orgs.yaml`. 
 
 ## Development
 
