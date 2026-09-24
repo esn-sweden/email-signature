@@ -128,85 +128,75 @@ ${website ? `<a href="${website}" style="color:#1155cc" target="_blank">${websit
 
 <img src="${logo}" alt="${orgName} logo" style="width:140px; height:auto; margin:10px 0;"><br>
 
-${
-  instagram
-    ? `<a href="${instagram}" target="_blank" style="display:inline-block;">
+${instagram
+      ? `<a href="${instagram}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.instagram} alt="Instagram" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  facebook
-    ? `<a href="${facebook}" target="_blank" style="display:inline-block;">
+${facebook
+      ? `<a href="${facebook}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.facebook} alt="Facebook" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  x
-    ? `<a href="${x}" target="_blank" style="display:inline-block;">
+${x
+      ? `<a href="${x}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.x} alt="X" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  bluesky
-    ? `<a href="${bluesky}" target="_blank" style="display:inline-block;">
+${bluesky
+      ? `<a href="${bluesky}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.bluesky} alt="Bluesky" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  youtube
-    ? `<a href="${youtube}" target="_blank" style="display:inline-block;">
+${youtube
+      ? `<a href="${youtube}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.youtube} alt="YouTube" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  linkedinOrg
-    ? `<a href="${linkedinOrg}" target="_blank" style="display:inline-block;">
+${linkedinOrg
+      ? `<a href="${linkedinOrg}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.linkedin} alt="LinkedIn" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  tiktok
-    ? `<a href="${tiktok}" target="_blank" style="display:inline-block;">
+${tiktok
+      ? `<a href="${tiktok}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.tiktok} alt="TikTok" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  flickr
-    ? `<a href="${flickr}" target="_blank" style="display:inline-block;">
+${flickr
+      ? `<a href="${flickr}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.flickr} alt="Flickr" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  whatsapp
-    ? `<a href="${whatsapp}" target="_blank" style="display:inline-block;">
+${whatsapp
+      ? `<a href="${whatsapp}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.whatsapp} alt="WhatsApp" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 
-${
-  skype
-    ? `<a href="${skype}" target="_blank" style="display:inline-block;">
+${skype
+      ? `<a href="${skype}" target="_blank" style="display:inline-block;">
     <img width="20" height="20" src=${icons.skype} alt="Skype" style="vertical-align:middle; border:none;">
 </a>`
-    : ""
-}
+      : ""
+    }
 </div>
 `.trim();
 
@@ -232,6 +222,8 @@ ${
 async function initOrganisations() {
   try {
     model.ESNOrgs = await loadActiveOrgs();
+    searchInput.placeholder = "Type to search..."
+    searchInput.disabled = false;
   } catch (error) {
     console.error("Failed to fetch data from ESN API:", error);
     model.apiError = "Failed to load organisations. Please try again later.";
@@ -259,10 +251,6 @@ function populateOrgInfo(org: ESNOrg) {
 
 // --------------------- Event listeners --------------------------------
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("loading")!.style.visibility = "hidden";
-  document.getElementById("app")!.style.visibility = "visible";
-});
 
 togglePronouns.addEventListener("change", () => {
   model.showPronouns = togglePronouns.checked;
@@ -347,5 +335,7 @@ async function copyToClipboard() {
 }
 
 // Init
+document.getElementById("loading")!.style.visibility = "hidden";
+document.getElementById("app")!.style.visibility = "visible";
 view();
 initOrganisations();
