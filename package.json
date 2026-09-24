@@ -14,7 +14,7 @@
     "sass": "^1.78",
     "typescript": "~7.0.2",
     "vite": "^8.0.5",
-    "vitest": "^4.1.9"
+    "vitest": "^5.0.1"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
