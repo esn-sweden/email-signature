@@ -23,7 +23,7 @@ const togglePronouns =
 const searchInput = document.querySelector<HTMLInputElement>("#org-search")!;
 const resultsContainer =
   document.querySelector<HTMLDivElement>("#org-results")!;
-const apiErrorBox = document.querySelector<HTMLDivElement>("#error");
+const apiErrorBox = document.querySelector<HTMLDivElement>("#error")!;
 
 const copyBtn = document.querySelector<HTMLButtonElement>("#copy-btn")!;
 const copyStatus = document.querySelector<HTMLSpanElement>("#copy-status")!;
@@ -39,11 +39,9 @@ async function initOrganisations() {
   } catch (error) {
     console.error("Failed to fetch data from ESN API:", error);
 
-    if (apiErrorBox) {
-      apiErrorBox.textContent =
-        "Failed to load organisations. Please try again later.";
-      apiErrorBox?.classList.remove("d-none");
-    }
+    apiErrorBox.textContent =
+      "Failed to load organisations. Please try again later.";
+    apiErrorBox?.classList.remove("d-none");
   }
 }
 
