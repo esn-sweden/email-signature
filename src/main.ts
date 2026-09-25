@@ -15,7 +15,7 @@ let model: Model = {
 };
 
 const loadingText = document.querySelector<HTMLDivElement>("#loading")!;
-const app = document.querySelector<HTMLDivElement>("app")!;
+const app = document.querySelector<HTMLDivElement>("#app")!;
 
 const togglePronouns =
   document.querySelector<HTMLInputElement>("#togglePronouns")!;
@@ -188,6 +188,10 @@ copyBtn.addEventListener("click", handleCopyToClipboard);
 // --------------------- Init --------------------------------
 // Only display the page after all styles have finished loading
 
-loadingText.style.visibility = "hidden";
-app.style.visibility = "visible";
-initOrganisations();
+function init() {
+  initOrganisations();
+  loadingText.style.visibility = "hidden";
+  app.style.visibility = "visible";
+}
+
+init();
