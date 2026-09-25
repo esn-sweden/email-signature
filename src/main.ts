@@ -3,19 +3,17 @@ import "bootstrap";
 import "./api";
 import { loadActiveOrgs } from "./api";
 import type { ESNOrg } from "../src/types/esn-org";
-import { renderSignature } from "./signature"
+import { createSignature } from "./signature"
 import { inputs } from "./inputs"
 
 interface Model {
   searchResults: ESNOrg[];
-  showPronouns: boolean;
   ESNOrgs: ESNOrg[];
   apiError: string;
 }
 
 let model: Model = {
   searchResults: [],
-  showPronouns: false,
   ESNOrgs: [],
   apiError: "",
 };
@@ -89,36 +87,9 @@ function populateOrgInfo(org: ESNOrg) {
   inputs.skype.value = org.skype ?? "";
 }
 
-// --------------------- Event listeners --------------------------------
-
-
-togglePronouns.addEventListener("change", () => {
-  model.showPronouns = togglePronouns.checked;
-  inputs.pronouns.disabled = !togglePronouns.checked;
-  try {
-    preview.innerHTML = renderSignature();
-  } catch (e) {
-    preview.innerHTML = "Fill in the required fields to see the signature"
-  }
-});
-
-// Typing in the search bar
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase();
-
-  if (query) {
-    model.searchResults = model.ESNOrgs.filter((org) =>
-      org.label.toLowerCase().includes(query),
-    ).slice(0, 10); // limit to 10 results
-    view();
-  } else {
-    model.searchResults = [];
-    view();
-  }
-});
-
 // Selecting a result from the drop-down
-resultsContainer.addEventListener("click", async (e) => {
+function handleOrgSelect(e: MouseEvent) {
+  console.log("clicked org")
   const target = e.target as HTMLElement;
   const item = target.closest("[data-code]") as HTMLElement;
   if (!item) return;
@@ -130,41 +101,34 @@ resultsContainer.addEventListener("click", async (e) => {
   populateOrgInfo(fullData);
   searchInput.value = fullData.label;
   model.searchResults = [];
+  console.log("rendering view")
   view();
-});
-
-// Select first search result when enter is pressed
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault(); // prevent form submission
-
-    const firstItem =
-      resultsContainer.querySelector<HTMLElement>(".list-group-item");
-    if (firstItem) {
-      firstItem.click();
+  try {
+    preview.innerHTML = createSignature();
+    copyBtn.disabled = false
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      preview.innerHTML = error.message
+      copyBtn.disabled = true
+    } else {
+      console.error("An unexpected error occurred:", error);
     }
   }
-});
-
-// Update preview as user types
-Object.values(inputs).forEach((input) => {
-  input.addEventListener("input", () => {
-    try {
-      preview.innerHTML = renderSignature();
-      copyBtn.disabled = false
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        preview.innerHTML = error.message
-        copyBtn.disabled = true
-      } else {
-        console.error("An unexpected error occurred:", error);
-      }
-    }
-  })
 }
-);
 
-copyBtn.addEventListener("click", copyToClipboard);
+function renderSignature() {
+  try {
+    preview.innerHTML = createSignature();
+    copyBtn.disabled = false
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      preview.innerHTML = error.message
+      copyBtn.disabled = true
+    } else {
+      console.error("An unexpected error occurred:", error);
+    }
+  }
+}
 
 async function copyToClipboard() {
   try {
@@ -190,6 +154,58 @@ async function copyToClipboard() {
     }, 5000);
   }
 }
+
+
+
+// --------------------- Event listeners --------------------------------
+
+
+togglePronouns.addEventListener("change", () => {
+  inputs.pronouns.disabled = !togglePronouns.checked;
+  renderSignature()
+});
+
+// Typing in the search bar
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase();
+
+  if (query) {
+    model.searchResults = model.ESNOrgs.filter((org) =>
+      org.label.toLowerCase().includes(query),
+    ).slice(0, 10); // limit to 10 results
+    view();
+  } else {
+    model.searchResults = [];
+    view();
+  }
+});
+
+// Selecting a result from the drop-down
+resultsContainer.addEventListener("click", handleOrgSelect);
+
+// Select first search result when enter is pressed
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault(); // prevent form submission
+
+    const firstItem =
+      resultsContainer.querySelector<HTMLElement>(".list-group-item");
+    if (firstItem) {
+      firstItem.click();
+    }
+  }
+});
+
+// Update preview as user types
+Object.values(inputs).forEach((input) => {
+  input.addEventListener("input",
+    renderSignature
+  )
+});
+
+copyBtn.addEventListener("click", copyToClipboard);
+
+
 
 // Init
 document.getElementById("loading")!.style.visibility = "hidden";
