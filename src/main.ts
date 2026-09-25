@@ -14,21 +14,22 @@ let model: Model = {
   ESNOrgs: [],
 };
 
-const togglePronouns = document.getElementById(
-  "togglePronouns",
-) as HTMLInputElement;
-const preview = document.getElementById("preview") as HTMLDivElement;
+const loadingText = document.querySelector<HTMLDivElement>("#loading")!;
+const app = document.querySelector<HTMLDivElement>("app")!;
 
-const searchInput = document.getElementById("org-search") as HTMLInputElement;
-const resultsContainer = document.getElementById(
-  "org-results",
-) as HTMLDivElement;
+const togglePronouns =
+  document.querySelector<HTMLInputElement>("#togglePronouns")!;
 
-const copyBtn = document.getElementById("copy-btn") as HTMLButtonElement;
-const copyStatus = document.getElementById("copy-status") as HTMLSpanElement;
-const copyError = document.getElementById("copy-error") as HTMLSpanElement;
+const searchInput = document.querySelector<HTMLInputElement>("#org-search")!;
+const resultsContainer =
+  document.querySelector<HTMLDivElement>("#org-results")!;
+const apiErrorBox = document.querySelector<HTMLDivElement>("#error");
 
-const apiErrorBox = document.getElementById("error") as HTMLDivElement;
+const copyBtn = document.querySelector<HTMLButtonElement>("#copy-btn")!;
+const copyStatus = document.querySelector<HTMLSpanElement>("#copy-status")!;
+const copyError = document.querySelector<HTMLSpanElement>("#copy-error")!;
+
+const preview = document.querySelector<HTMLDivElement>("#preview")!;
 
 async function initOrganisations() {
   try {
@@ -88,8 +89,6 @@ function handleSearchTyping() {
     resultsContainer.innerHTML = "";
   }
 }
-
-
 
 function handleOrgSelect(e: MouseEvent) {
   resultsContainer.innerHTML = "";
@@ -188,6 +187,7 @@ copyBtn.addEventListener("click", handleCopyToClipboard);
 
 // --------------------- Init --------------------------------
 // Only display the page after all styles have finished loading
-document.getElementById("loading")!.style.visibility = "hidden";
-document.getElementById("app")!.style.visibility = "visible";
+
+loadingText.style.visibility = "hidden";
+app.style.visibility = "visible";
 initOrganisations();
