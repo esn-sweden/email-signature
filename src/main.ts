@@ -3,19 +3,15 @@ import "bootstrap";
 import "./api";
 import { loadActiveOrgs } from "./api";
 import type { ESNOrg } from "../src/types/esn-org";
-import { createSignature } from "./signature"
-import { inputs } from "./inputs"
+import { createSignature } from "./signature";
+import { inputs } from "./inputs";
 
 interface Model {
-  searchResults: ESNOrg[];
   ESNOrgs: ESNOrg[];
-  apiError: string;
 }
 
 let model: Model = {
-  searchResults: [],
   ESNOrgs: [],
-  apiError: "",
 };
 
 const togglePronouns = document.getElementById(
@@ -34,42 +30,78 @@ const copyError = document.getElementById("copy-error") as HTMLSpanElement;
 
 const apiErrorBox = document.getElementById("error") as HTMLDivElement;
 
-
-function view() {
-  if (model.searchResults.length > 0) {
-    resultsContainer.innerHTML = model.searchResults
-      .map(
-        (org) => `
-      <div class="list-group-item list-group-item-action" data-code="${org.code}">
-        ${org.label}
-      </div>
-    `,
-      )
-      .join("");
-  } else {
-    resultsContainer.innerHTML = "";
-  }
-
-
-
-}
-
 async function initOrganisations() {
   try {
     model.ESNOrgs = await loadActiveOrgs();
-    searchInput.placeholder = "Type to search..."
+    searchInput.placeholder = "Type to search...";
     searchInput.disabled = false;
   } catch (error) {
     console.error("Failed to fetch data from ESN API:", error);
 
     if (apiErrorBox) {
-      apiErrorBox.textContent = "Failed to load organisations. Please try again later.";
+      apiErrorBox.textContent =
+        "Failed to load organisations. Please try again later.";
       apiErrorBox?.classList.remove("d-none");
     }
   }
 }
 
-function populateOrgInfo(org: ESNOrg) {
+function renderSignature() {
+  try {
+    preview.innerHTML = createSignature();
+    copyBtn.disabled = false;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      preview.innerHTML = error.message;
+      copyBtn.disabled = true;
+    } else {
+      console.error("An unexpected error occurred:", error);
+    }
+  }
+}
+
+// --------------------- Event handlers --------------------------------
+
+function handleSearchTyping() {
+  const query = searchInput.value.toLowerCase();
+
+  if (!query) {
+    resultsContainer.innerHTML = "";
+    return;
+  }
+
+  let results = model.ESNOrgs.filter((org) =>
+    org.label.toLowerCase().includes(query),
+  ).slice(0, 10); // limit to 10 results
+
+  if (results.length > 0) {
+    resultsContainer.innerHTML = results
+      .map(
+        (org) => `
+        <div class="list-group-item list-group-item-action" data-code="${org.code}">
+          ${org.label}
+        </div>
+      `,
+      )
+      .join("");
+  } else {
+    resultsContainer.innerHTML = "";
+  }
+}
+
+
+
+function handleOrgSelect(e: MouseEvent) {
+  resultsContainer.innerHTML = "";
+
+  const target = e.target as HTMLElement;
+  const item = target.closest("[data-code]") as HTMLElement;
+  if (!item) return;
+
+  const code = item.dataset.code!;
+  const org = model.ESNOrgs.find((s) => s.code === code);
+  if (!org) return;
+
   inputs.orgName.value = org.label;
   inputs.address.value = org.address;
   inputs.website.value = org.website;
@@ -86,50 +118,25 @@ function populateOrgInfo(org: ESNOrg) {
   inputs.flickr.value = org.flickr ?? "";
   inputs.whatsapp.value = org.whatsapp ?? "";
   inputs.skype.value = org.skype ?? "";
+
+  searchInput.value = org.label;
+
+  renderSignature();
 }
 
-// Selecting a result from the drop-down
-function handleOrgSelect(e: MouseEvent) {
-  const target = e.target as HTMLElement;
-  const item = target.closest("[data-code]") as HTMLElement;
-  if (!item) return;
+function handleEnterOnSearch(e: KeyboardEvent) {
+  if (e.key === "Enter") {
+    e.preventDefault(); // prevent form submission
 
-  const code = item.dataset.code!;
-  const fullData = model.ESNOrgs.find((s) => s.code === code);
-
-  if (!fullData) return;
-  populateOrgInfo(fullData);
-  searchInput.value = fullData.label;
-  model.searchResults = [];
-  view();
-  try {
-    preview.innerHTML = createSignature();
-    copyBtn.disabled = false
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      preview.innerHTML = error.message
-      copyBtn.disabled = true
-    } else {
-      console.error("An unexpected error occurred:", error);
+    const firstItem =
+      resultsContainer.querySelector<HTMLElement>(".list-group-item");
+    if (firstItem) {
+      firstItem.click();
     }
   }
 }
 
-function renderSignature() {
-  try {
-    preview.innerHTML = createSignature();
-    copyBtn.disabled = false
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      preview.innerHTML = error.message
-      copyBtn.disabled = true
-    } else {
-      console.error("An unexpected error occurred:", error);
-    }
-  }
-}
-
-async function copyToClipboard() {
+async function handleCopyToClipboard() {
   try {
     const blob = new Blob([preview.innerHTML], { type: "text/html" });
     const plainBlob = new Blob([preview.innerText.trim()], {
@@ -154,59 +161,33 @@ async function copyToClipboard() {
   }
 }
 
-
 // --------------------- Event listeners --------------------------------
 
-
-togglePronouns.addEventListener("change", () => {
-  inputs.pronouns.disabled = !togglePronouns.checked;
-  renderSignature()
-});
-
 // Typing in the search bar
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase();
-
-  if (query) {
-    model.searchResults = model.ESNOrgs.filter((org) =>
-      org.label.toLowerCase().includes(query),
-    ).slice(0, 10); // limit to 10 results
-    view();
-  } else {
-    model.searchResults = [];
-    view();
-  }
-});
+searchInput.addEventListener("input", handleSearchTyping);
 
 // Selecting a result from the drop-down
 resultsContainer.addEventListener("click", handleOrgSelect);
 
-// Select first search result when enter is pressed
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault(); // prevent form submission
+// Selecting first search result when enter is pressed
+searchInput.addEventListener("keydown", handleEnterOnSearch);
 
-    const firstItem =
-      resultsContainer.querySelector<HTMLElement>(".list-group-item");
-    if (firstItem) {
-      firstItem.click();
-    }
-  }
+// Update signature based on pronouns enabled/disabled
+togglePronouns.addEventListener("change", () => {
+  inputs.pronouns.disabled = !togglePronouns.checked;
+  renderSignature();
 });
 
 // Update preview as user types
 Object.values(inputs).forEach((input) => {
-  input.addEventListener("input",
-    renderSignature
-  )
+  input.addEventListener("input", renderSignature);
 });
 
-copyBtn.addEventListener("click", copyToClipboard);
+// Clicking on the copy signature button
+copyBtn.addEventListener("click", handleCopyToClipboard);
 
-
-
-// Init
+// --------------------- Init --------------------------------
+// Only display the page after all styles have finished loading
 document.getElementById("loading")!.style.visibility = "hidden";
 document.getElementById("app")!.style.visibility = "visible";
-view();
 initOrganisations();
