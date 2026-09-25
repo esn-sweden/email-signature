@@ -142,7 +142,6 @@ ${skype
             input.classList.remove("is-invalid");
         }
     });
-    console.log(errorCount)
     if (errorCount === 0) {
         return DOMPurify.sanitize(signatureHTML);
     } else {

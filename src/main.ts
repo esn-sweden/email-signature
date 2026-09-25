@@ -22,14 +22,17 @@ const togglePronouns = document.getElementById(
   "togglePronouns",
 ) as HTMLInputElement;
 const preview = document.getElementById("preview") as HTMLDivElement;
+
 const searchInput = document.getElementById("org-search") as HTMLInputElement;
 const resultsContainer = document.getElementById(
   "org-results",
 ) as HTMLDivElement;
-const copyBtn = document.getElementById("copy-btn") as HTMLButtonElement;
 
+const copyBtn = document.getElementById("copy-btn") as HTMLButtonElement;
 const copyStatus = document.getElementById("copy-status") as HTMLSpanElement;
 const copyError = document.getElementById("copy-error") as HTMLSpanElement;
+
+const apiErrorBox = document.getElementById("error") as HTMLDivElement;
 
 
 function view() {
@@ -47,13 +50,7 @@ function view() {
     resultsContainer.innerHTML = "";
   }
 
-  const el = document.getElementById("error");
-  if (el) el.textContent = model.apiError;
-  if (model.apiError) {
-    el?.classList.remove("d-none");
-  } else {
-    el?.classList.add("d-none");
-  }
+
 
 }
 
@@ -64,7 +61,11 @@ async function initOrganisations() {
     searchInput.disabled = false;
   } catch (error) {
     console.error("Failed to fetch data from ESN API:", error);
-    model.apiError = "Failed to load organisations. Please try again later.";
+
+    if (apiErrorBox) {
+      apiErrorBox.textContent = "Failed to load organisations. Please try again later.";
+      apiErrorBox?.classList.remove("d-none");
+    }
   }
 }
 
@@ -89,7 +90,6 @@ function populateOrgInfo(org: ESNOrg) {
 
 // Selecting a result from the drop-down
 function handleOrgSelect(e: MouseEvent) {
-  console.log("clicked org")
   const target = e.target as HTMLElement;
   const item = target.closest("[data-code]") as HTMLElement;
   if (!item) return;
@@ -101,7 +101,6 @@ function handleOrgSelect(e: MouseEvent) {
   populateOrgInfo(fullData);
   searchInput.value = fullData.label;
   model.searchResults = [];
-  console.log("rendering view")
   view();
   try {
     preview.innerHTML = createSignature();
@@ -154,7 +153,6 @@ async function copyToClipboard() {
     }, 5000);
   }
 }
-
 
 
 // --------------------- Event listeners --------------------------------
