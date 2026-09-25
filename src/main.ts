@@ -186,10 +186,9 @@ Object.values(inputs).forEach((input) => {
 copyBtn.addEventListener("click", handleCopyToClipboard);
 
 // --------------------- Init --------------------------------
-// Only display the page after all styles have finished loading
-
 function init() {
   initOrganisations();
+  // Only display the page after all styles have finished loading
   loadingText.style.visibility = "hidden";
   app.style.visibility = "visible";
 }
