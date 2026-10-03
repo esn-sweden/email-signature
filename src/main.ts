@@ -187,7 +187,7 @@ copyBtn.addEventListener("click", handleCopyToClipboard);
 function init() {
   initOrganisations();
   // Only display the page after all styles have finished loading
-  loadingText.style.visibility = "hidden";
+  loadingText.remove();
   app.style.visibility = "visible";
 }
 
